@@ -12,7 +12,7 @@ namespace SEP4DataWarehouse.Controllers
         [HttpGet(Name = "GetReading")]
         public String Get()
         {
-            return "API works";
+            return "CD works";
         }
 
     }
