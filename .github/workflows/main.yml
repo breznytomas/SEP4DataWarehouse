@@ -20,9 +20,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Publish
+    - name: Login
       env:
-        HEROKU_API_KEY: ${{ '7667c5b7-c508-4df2-ace1-3169ab139081' }}
+          HEROKU_API_KEY: ${{ '7667c5b7-c508-4df2-ace1-3169ab139081' }}
+      run: echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
+
+    - name: Publish
       run: |
         cd SEP4DataWarehouse
         heroku container:push -a smart-greenhouse-data-server web
