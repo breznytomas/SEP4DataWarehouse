@@ -9,11 +9,6 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-env:
-  HEROKU_API_KEY: ${{ '7667c5b7-c508-4df2-ace1-3169ab139081' }}
-  APP_NAME: ${{ 'smart-greenhouse-data-server' }}
-
 jobs:
       
   deploy:
@@ -25,15 +20,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
-    - name: Login to heroku container registry
-      run: echo $HEROKU_API_KEY | docker login -u ${{ 'oliversperlik' }} --password-stdin registry.heroku.com
-    
     - name: Build docker image
       run: docker build -t sep4datawarehouse ./SEP4DataWarehouse
     
 
     # Push the Docker image to Heroku Container Registry
     - name: Publish
+      env:
+          HEROKU_API_KEY: ${{ '7667c5b7-c508-4df2-ace1-3169ab139081' }}
+          APP_NAME: ${{ 'smart-greenhouse-data-server' }}
       run: |
+        heroku container:login
         heroku container:push web -a $APP_NAME
         heroku container:release web -a $APP_NAME
