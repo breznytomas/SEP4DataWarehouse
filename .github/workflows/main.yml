@@ -21,12 +21,12 @@ jobs:
       uses: actions/checkout@v2
   
     # Push the Docker image to Heroku Container Registry
-    - name: Publish
+    - name: Login
       env:
           HEROKU_API_KEY: ${{ '7667c5b7-c508-4df2-ace1-3169ab139081' }}
-          APP_NAME: ${{ 'smart-greenhouse-data-server' }}
+      run: echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
+        
+    - name: Publish
       run: |
-        echo $HEROKU_API_KEY
-        docker login --username=_ --password-stdin registry.heroku.com
         docker build -t sep4datawarehouse ./SEP4DataWarehouse
         docker push registry.heroku.com/smart-greenhouse-data-server-web
