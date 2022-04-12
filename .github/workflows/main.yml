@@ -33,7 +33,7 @@ jobs:
       run: ls
       
     - name: Docker build
-      run: docker build -t sep4datawarehouse .
+      run: docker build -t sep4datawarehouse /SEP4DataWarehouse/
 
     # Push the Docker image to Heroku Container Registry
     - name: Publish
