@@ -30,7 +30,7 @@ jobs:
 #       run: echo ${{ 'greenhouse123' }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
 
     - name: Locate dockerfile
-      run: cd SEP4DataWarehouse
+      run: ls
       
     - name: Docker build
       run: docker build -t sep4datawarehouse .
