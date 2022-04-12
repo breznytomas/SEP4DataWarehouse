@@ -10,10 +10,9 @@ on:
   pull_request:
     branches: [ main ]
 
-#set environment variables 
-# env:
+env:
 #   HEROKU_API_KEY: ${{ '7667c5b7-c508-4df2-ace1-3169ab139081' }}
-#   APP_NAME: ${{ 'smart-greenhouse-data-server' }}
+  APP_NAME: ${{ 'smart-greenhouse-data-server' }}
 
 jobs:
       
@@ -28,7 +27,7 @@ jobs:
 
     # Build Docker image
     - name: Docker login
-      run: echo ${{ greenhouse123 }} | docker login -u ${{ sperlik.oliver@outlook.com }} --password-stdin
+      run: echo ${{ 'greenhouse123' }} | docker login -u ${{ 'sperlik.oliver@outlook.com' }} --password-stdin
       
     - name: Docker build
       run: docker build -t . --file Dockerfile
