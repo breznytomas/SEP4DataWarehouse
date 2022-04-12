@@ -27,6 +27,4 @@ jobs:
       run: echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
         
     - name: Publish
-      run: |
-        docker build -t sep4datawarehouse ./SEP4DataWarehouse
-        docker push registry.heroku.com/smart-greenhouse-data-server-web
+      run: docker push registry.heroku.com/smart-greenhouse-data-server/web
