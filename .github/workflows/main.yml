@@ -37,7 +37,7 @@ jobs:
       
     - name: Heroku login
 #       run: echo ${{ HEROKU_API_KEY }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
-      run: echo ${{ HEROKU_API_KEY }} | docker login -u ${{ 'oliversperlik' }} --password-stdin registry.heroku.com
+      run: echo $HEROKU_API_KEY | docker login -u ${{ 'oliversperlik' }} --password-stdin registry.heroku.com
 
     # Push the Docker image to Heroku Container Registry
     - name: Publish
