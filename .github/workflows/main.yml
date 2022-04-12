@@ -26,11 +26,11 @@ jobs:
       uses: actions/checkout@v2
 
     # Build Docker image
-    - name: Docker login
-      run: echo ${{ 'greenhouse123' }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
+#     - name: Docker login
+#       run: echo ${{ 'greenhouse123' }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
       
     - name: Docker build
-      run: docker build -t sep4datawarehouse --file Dockerfile .
+      run: docker build -t sep4datawarehouse .
 
     # Push the Docker image to Heroku Container Registry
     - name: Publish
