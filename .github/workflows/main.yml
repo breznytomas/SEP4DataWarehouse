@@ -28,5 +28,5 @@ jobs:
         
     - name: Publish
       run: |
-        docker build -t sep4datawarehouse:latest ./SEP4DataWarehouse
+        docker build -t registry.heroku.com/smart-greenhouse-data-server/web ./SEP4DataWarehouse
         docker push registry.heroku.com/smart-greenhouse-data-server/web
