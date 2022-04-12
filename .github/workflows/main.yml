@@ -28,6 +28,9 @@ jobs:
     # Build Docker image
 #     - name: Docker login
 #       run: echo ${{ 'greenhouse123' }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
+
+    - name: Locate dockerfile
+      run: cd SEP4DataWarehouse
       
     - name: Docker build
       run: docker build -t sep4datawarehouse .
