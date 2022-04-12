@@ -24,20 +24,13 @@ jobs:
     # Clone the repository
     - name: Checkout
       uses: actions/checkout@v2
-
-    # Build Docker image
-#     - name: Docker login
-#       run: echo ${{ 'greenhouse123' }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
-
-    - name: Locate dockerfile
-      run: ls
-      
-    - name: Docker build
-      run: docker build -t sep4datawarehouse ./SEP4DataWarehouse
-      
-    - name: Heroku login
-#       run: echo ${{ HEROKU_API_KEY }} | docker login -u ${{ 'oliversperlik' }} --password-stdin
+    
+    - name: Login to heroku container registry
       run: echo $HEROKU_API_KEY | docker login -u ${{ 'oliversperlik' }} --password-stdin registry.heroku.com
+    
+    - name: Build docker image
+      run: docker build -t sep4datawarehouse ./SEP4DataWarehouse
+    
 
     # Push the Docker image to Heroku Container Registry
     - name: Publish
