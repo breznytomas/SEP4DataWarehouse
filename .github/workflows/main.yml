@@ -27,6 +27,6 @@ jobs:
           APP_NAME: ${{ 'smart-greenhouse-data-server' }}
       run: |
         echo $HEROKU_API_KEY
-        docker login --email=_ --username=_ --password-stdin registry.heroku.com
+        docker login --password-stdin registry.heroku.com
         docker build -t sep4datawarehouse ./SEP4DataWarehouse
         docker push registry.heroku.com/smart-greenhouse-data-server-web
