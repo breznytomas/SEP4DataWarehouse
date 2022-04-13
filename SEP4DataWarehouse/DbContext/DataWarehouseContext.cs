@@ -27,6 +27,7 @@ namespace SEP4DataWarehouse.DbContext
                 Password = userInfo[1],
                 Database = databaseUri.LocalPath.TrimStart('/')
             };
+            Console.WriteLine(builder.ToString());
             return builder.ToString();
         }
 
