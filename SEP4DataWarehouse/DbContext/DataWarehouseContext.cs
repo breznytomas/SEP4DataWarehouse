@@ -1,4 +1,6 @@
+using System;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace SEP4DataWarehouse.DbContext
 {
@@ -10,14 +12,30 @@ namespace SEP4DataWarehouse.DbContext
         {
             
         }
-        
+
+        public String getDatabaseUrl()
+        {
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var databaseUri = new Uri(databaseUrl);
+            var userInfo = databaseUri.UserInfo.Split(':');
+
+            var builder = new NpgsqlConnectionStringBuilder
+            {
+                Host = databaseUri.Host,
+                Port = databaseUri.Port,
+                Username = userInfo[0],
+                Password = userInfo[1],
+                Database = databaseUri.LocalPath.TrimStart('/')
+            };
+            return builder.ToString();
+        }
 
         //just for testing if it does something
         public DbSet<Reading> Readings { get; set; }
 
+        
         //change in case database changes
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(
-            "Host=ec2-63-32-248-14.eu-west-1.compute.amazonaws.com;Database=d5g87javtbe0sb;Username=tvxzufojhnbdmi;Password=a4992f6a91bd7d1f61de47b915e66342528b6a310283b29944c6e91924e335f5;");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(getDatabaseUrl());
 
 
     }
