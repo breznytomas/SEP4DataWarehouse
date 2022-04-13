@@ -8,7 +8,7 @@ using SEP4DataWarehouse.DbContext;
 
 namespace SEP4DataWarehouse.Controllers
 {
-    //just for testing
+    //just for testing db connection
     [ApiController]
     [Route("[controller]")]
     public class ReadingController : ControllerBase

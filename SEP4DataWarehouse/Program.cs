@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//connecting to db
+//Connecting to db
 builder.Services.AddDbContext<DataWarehouseContext>();
 
 var app = builder.Build();

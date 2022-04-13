@@ -8,11 +8,19 @@ namespace SEP4DataWarehouse.DbContext
     {
         
         //this just has to be there for postgresql compatibility
-  
+
 
         public String getDatabaseUrl()
         {
-            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            string? databaseUrl;
+            #if (DEBUG)
+            // remember to have this file here when running the app locally
+            // the credentials to the db can change every few months by themselves so if it appears to be not working let me know -oliver
+            databaseUrl = System.IO.File.ReadAllText("./DbContext/DbString.txt");
+            #else
+            //for heroku
+            databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            #endif
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
 
@@ -24,8 +32,11 @@ namespace SEP4DataWarehouse.DbContext
                 Password = userInfo[1],
                 Database = databaseUri.LocalPath.TrimStart('/')
             };
-            Console.WriteLine(builder.ToString());
             return builder.ToString();
+
+
+
+
         }
 
         //just for testing if it does something
