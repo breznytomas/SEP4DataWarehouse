@@ -8,10 +8,7 @@ namespace SEP4DataWarehouse.DbContext
     {
         
         //this just has to be there for postgresql compatibility
-        public DataWarehouseContext(DbContextOptions<DataWarehouseContext> dbContextOptions) : base(dbContextOptions)
-        {
-            
-        }
+  
 
         public String getDatabaseUrl()
         {
