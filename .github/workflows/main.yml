@@ -27,6 +27,6 @@ jobs:
     # 4. Release the image
       run: |
         cd SEP4DataWarehouse
-        echo $HEROKU_API_KEY | docker login --username=_ --password=-stdin registry.heroku.com
+        echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
         heroku container:push -a smart-greenhouse-data-server web
         heroku container:release -a smart-greenhouse-data-server web
