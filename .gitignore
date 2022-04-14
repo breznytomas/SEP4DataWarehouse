@@ -6,6 +6,10 @@
 # Database string
 DbContext/DbString.txt
 
+# Test obj
+/Test/obj
+/Test/bin
+
 # User-specific files
 *.rsuser
 *.suo
