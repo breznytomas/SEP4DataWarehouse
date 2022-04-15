@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{always()}}
         with:
-          name: 'CI-Test-Run${{github.run_number}}'
+          name: 'CI-Test-Run$-{{github.run_number}}'
           path: ${{github.workspace}}/${{env.file_name}}      
           
   deploy:
