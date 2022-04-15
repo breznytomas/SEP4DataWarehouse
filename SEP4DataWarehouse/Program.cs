@@ -24,9 +24,6 @@ var builder = WebApplication.CreateBuilder(args);
     app.UseSwaggerUI();
     }
 
-    // if you are having trouble running the app locally or it's not working in production maybe comment this out, i'm still unsure what it does but sometimes it helped me to get rid of it ???
-    // so far i haven't found it to have any effect on whether the app runs with https or not
-    // if everything seems to be working okay just disregard this comment
     app.UseHttpsRedirection();
 
     app.UseAuthorization();
