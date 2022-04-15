@@ -15,12 +15,12 @@ jobs:
     steps:
     
     - name: Checkout
-      uses: actions/checkout@v2 # Clones the repository to the runner
+      uses: actions/checkout@v2 # Checks out the repository to the runner
   
     - name: Login / Build / Deploy
       env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Stores the Heroku API Key as an environment variable
-        HEROKU_APP_NAME: ${{ 'smart-greenhouse-data-server' }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Stores the Heroku API Key as an environment variable. Uses github secrets so that it is not exposed
+        HEROKU_APP_NAME: ${{ 'smart-greenhouse-data-server' }} # Stores the heroku app name as an environment variable
         
     # 1. Change working directory to root of the solution where the dockerfile is located
     # 2. Log in to heroku container registry, automatically uses the environment variable defined previously
