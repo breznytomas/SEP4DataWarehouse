@@ -9,7 +9,7 @@ DbContext/DbString.txt
 # Test obj
 /Test/obj
 /Test/bin
-
+/Test/TestResults
 # User-specific files
 *.rsuser
 *.suo
