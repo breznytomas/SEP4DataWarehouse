@@ -6,16 +6,18 @@ namespace SEP4DataWarehouse.DbContext
 {
     public class DataWarehouseContext : Microsoft.EntityFrameworkCore.DbContext
     {
+        //connects the program to postgres, just don't touch this
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(getDatabaseUrl());
         
-        //this just has to be there for postgresql compatibility
-
-
+        // takes the database connection string provided by heroku and uses string manipulation to create and return the connection string in format suitable for C#
+        // if in debug build configuration it takes the string from a file. Remember to have this file here and to set your build config to 'debug' (next to the 'Run' button) when running the app locally 
+        // if in release configuration it takes the string from environment variable that is provided by heroku to the running docker container
+        // don't touch this method also. if something appears to be broken maybe the connection string changed due to maintenance, in that case let me know -oliver
         public String getDatabaseUrl()
         {
             string? databaseUrl;
             #if (DEBUG)
-            // remember to have this file here when running the app locally
-            // the credentials to the db can change every few months by themselves so if it appears to be not working let me know -oliver
+
             databaseUrl = System.IO.File.ReadAllText("./DbContext/DbString.txt");
             #else
             //for heroku
@@ -34,21 +36,16 @@ namespace SEP4DataWarehouse.DbContext
             };
             return builder.ToString();
 
-
-
-
+            
         }
-
-        //just for testing if it does something
-        public DbSet<Reading> Readings { get; set; }
-
         
-        //change in case database changes
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(getDatabaseUrl());
+       
 
-
+        //just for testing if infrastructure works, feel free to delete
+        public DbSet<Reading> Readings { get; set; }
+        
     }
-    //just for testing if it does something
+    //just for testing if infrastructure works, feel free to delete
     public class Reading
     {
         public int ReadingId { get; set; }

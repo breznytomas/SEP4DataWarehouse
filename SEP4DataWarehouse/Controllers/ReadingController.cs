@@ -8,7 +8,7 @@ using SEP4DataWarehouse.DbContext;
 
 namespace SEP4DataWarehouse.Controllers
 {
-    //just for testing db connection
+    //just for testing if infrastructure works correctly, feel free to delete
     [ApiController]
     [Route("[controller]")]
     public class ReadingController : ControllerBase
@@ -21,6 +21,12 @@ namespace SEP4DataWarehouse.Controllers
             return readings.ToString();
         }
 
-
+        //just for testing if xUnit works correctly, feel free to delete
+        public int AddFunction(int x, int y)
+        {
+            return x + y;
+        }
     }
+    
+
 }
