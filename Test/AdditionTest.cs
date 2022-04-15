@@ -18,10 +18,4 @@ using SEP4DataWarehouse.Controllers;
             Assert.Equal(2, _readingController.AddFunction(1,1));
         }
         
-        //designed to fail
-        [Fact]
-        public void AdditionTestFail()
-        {
-            Assert.Equal(3, _readingController.AddFunction(1,1));
-        }
     }

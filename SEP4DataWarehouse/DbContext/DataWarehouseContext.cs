@@ -17,7 +17,6 @@ namespace SEP4DataWarehouse.DbContext
         {
             string? databaseUrl;
             #if (DEBUG)
-
             databaseUrl = System.IO.File.ReadAllText("./DbContext/DbString.txt");
             #else
             //for heroku
