@@ -24,9 +24,14 @@ jobs:
           
       - name: Install dependencies
         run: dotnet restore # Install all dependencies
+        
+      - name: Set test title
+        run: |
+          echo "title=Test Run ${{github.run_number}}" >> $GITHUB_ENV
+          echo "file_name=TestReport.${{github.run_number}}.md" >> $GITHUB_ENV
       
-      - name: Run tests
-        run: dotnet test # Run xUnit tests
+      - name: Run tests and generate report
+        run: dotnet test --no-restore --configuration 'Release' --logger:"liquid.md;LogFileName=${{github.workspace}}/${{env.file_name}};Title=${{env.title}};" # Run xUnit tests
       
   deploy:
     name: Deploy to Heroku
