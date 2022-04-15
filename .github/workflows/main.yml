@@ -30,6 +30,8 @@ jobs:
       
   deploy:
     name: Deploy to Heroku
+    needs: [test]
+    if: success()
     runs-on: ubuntu-latest # OS to execute the job in
     steps:
     
