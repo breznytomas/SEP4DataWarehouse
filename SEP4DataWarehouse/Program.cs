@@ -4,16 +4,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEP4DataWarehouse.DbContext;
-
+using SEP4DataWarehouse.Services;
+using SEP4DataWarehouse.Services.Implementations;
+using SEP4DataWarehouse.Services.Interfaces;
+using SEP4DataWarehouse.Utilities;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+    // Add services to the container.
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-    builder.Services.AddDbContext<DataWarehouseContext>();
+
+    //adding the database context
+    builder.Services.AddDbContext<DataWarehouseDbContext>();
+
+    // Adding the service classes so i can use them in the controller, automatically add in the constructors
+    builder.Services.AddScoped<ITemperatureService, DbTemperatureService>();
+    builder.Services.AddScoped<IReadingService, DbReadingService>();
+
+    builder.Services.AddScoped<IExceptionUtilityService, ExceptionUtility>();
 
     var app = builder.Build();
 

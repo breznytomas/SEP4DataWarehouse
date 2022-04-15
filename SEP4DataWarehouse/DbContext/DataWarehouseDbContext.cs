@@ -1,11 +1,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using SEP4DataWarehouse.Models;
 
 namespace SEP4DataWarehouse.DbContext
 {
-    public class DataWarehouseContext : Microsoft.EntityFrameworkCore.DbContext
+    public class DataWarehouseDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
+        public DbSet<Temperature> TemperatureSet { get; set; }
+        // public DbSet<Light> LightSet { get; set; }
+        // public DbSet<CarbonDioxide> CarbonDioxideSet { get; set; }
+        // public DbSet<Humidity> HumiditySet { get; set; }
+        // public DbSet<User> Users { get; set; }
+        // public DbSet<Event> Events { get; set; }
+
+
         //connects the program to postgres, just don't touch this
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(getDatabaseUrl());
         
@@ -37,18 +46,6 @@ namespace SEP4DataWarehouse.DbContext
 
             
         }
-        
-       
 
-        //just for testing if infrastructure works, feel free to delete
-        public DbSet<Reading> Readings { get; set; }
-        
-    }
-    //just for testing if infrastructure works, feel free to delete
-    public class Reading
-    {
-        public int ReadingId { get; set; }
-        public int Timestamp { get; set; }
-        public int Humidity { get; set; }
     }
 }

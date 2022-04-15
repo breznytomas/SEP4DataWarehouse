@@ -1,32 +1,50 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SEP4DataWarehouse.DbContext;
+using SEP4DataWarehouse.Models;
+using SEP4DataWarehouse.Services.Interfaces;
+using SEP4DataWarehouse.Utilities;
 
 namespace SEP4DataWarehouse.Controllers
 {
     //just for testing if infrastructure works correctly, feel free to delete
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ReadingController : ControllerBase
     {
-        [HttpGet(Name = "GetReading")]
-        public async Task<String> Get()
+        private readonly IReadingService readingService;
+        private readonly IExceptionUtilityService exceptionUtility;
+
+        public ReadingController(IReadingService readingService, IExceptionUtilityService exceptionUtility)
         {
-            using DataWarehouseContext dataWarehouseContext = new DataWarehouseContext();
-            List<Reading> readings = await dataWarehouseContext.Readings.ToListAsync();
-            return readings.ToString();
+            this.readingService = readingService;
+            this.exceptionUtility = exceptionUtility;
         }
 
-        //just for testing if xUnit works correctly, feel free to delete
-        public int AddFunction(int x, int y)
+        [HttpPost]
+        public async Task<ActionResult> CreateReading([FromBody] Reading reading)
         {
-            return x + y;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await readingService.CreateReadingAsync(reading);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return exceptionUtility.HandleException(e);
+            }
         }
+        
+
+        // [HttpGet(Name = "GetReading")]
+        // public async Task<String> Get()
+        // {
+        //     using DataWarehouseDbContext dataWarehouseDbContext = new DataWarehouseDbContext();
+        //     List<Reading> readings = await dataWarehouseDbContext.Readings.ToListAsync();
+        //     return readings.ToString();
+        // }
+        
     }
-    
-
 }
