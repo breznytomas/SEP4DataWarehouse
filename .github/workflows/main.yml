@@ -1,11 +1,9 @@
 #Workflow for Continuous Integration and Continuous Deployment
 name: Continuous Integration / Continuous Deployment
 
-# Triggers the workflow on push or pull request events
+# Triggers the workflow on push events
 on:
   push:
-    branches: '*'
-  pull_request:
     branches: '*'
     
 jobs:
