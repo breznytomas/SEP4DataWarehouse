@@ -1,12 +1,12 @@
 #Workflow for Continuous Integration and Continuous Deployment
 name: Continuous Integration / Continuous Deployment
 
-# Triggers the workflow on push or pull request events for the main branch
+# Triggers the workflow on push or pull request events
 on:
   push:
-    branches: [ main ]
+    branches: '*'
   pull_request:
-    branches: [ main ]
+    branches: '*'
     
 jobs:
   test:
@@ -43,7 +43,8 @@ jobs:
   deploy:
     name: Deploy to Heroku
     needs: [test] # Requires the test job to finish before executing this job
-    if: success() # Executes this job only if the test job ran successfully
+    if: success() && github.ref == 'refs/heads/main' # Executes this job only if the test job ran successfully and only if the push/PR was in main branch
+  
     runs-on: ubuntu-latest # OS to execute the job in
     steps:
     
