@@ -8,11 +8,16 @@ namespace SEP4DataWarehouse.DbContext
     public class DataWarehouseDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public DbSet<Temperature> TemperatureSet { get; set; }
-        // public DbSet<Light> LightSet { get; set; }
-        // public DbSet<CarbonDioxide> CarbonDioxideSet { get; set; }
-        // public DbSet<Humidity> HumiditySet { get; set; }
-        // public DbSet<User> Users { get; set; }
-        // public DbSet<Event> Events { get; set; }
+        public DbSet<Light> LightSet { get; set; }
+        public DbSet<CarbonDioxide> CarbonDioxideSet { get; set; }
+        public DbSet<Humidity> HumiditySet { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Trigger> Triggers { get; set; }
+        public DbSet<Board> Boards { get; set; }
+       
+       
+
 
 
         //connects the program to postgres, just don't touch this

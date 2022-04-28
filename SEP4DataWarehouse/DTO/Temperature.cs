@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SEP4DataWarehouse.Models;
 
-public class Light
+public class TemperatureDTO
 {
     [Required, Key]
     [JsonPropertyName("Id")]

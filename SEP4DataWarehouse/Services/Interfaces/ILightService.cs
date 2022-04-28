@@ -4,6 +4,9 @@ namespace SEP4DataWarehouse.Services.Interfaces;
 
 public interface ILightService
 {
-    Task<List<Light>> GetLightAsync();
-    Task DeleteLightAsync();
+    
+    Task<ICollection<Light>> GetLightAsync(int boardId);
+    Task DeleteLightAsync(int boardId);
+
+    Task AddLightAsync(ICollection<Light> lights );
 }

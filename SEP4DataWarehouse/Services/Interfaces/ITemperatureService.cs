@@ -4,6 +4,9 @@ namespace SEP4DataWarehouse.Services.Interfaces;
 
 public interface ITemperatureService
 {
-    Task<List<Temperature>> GetTemperatureAsync();
-    Task DeleteTemperatureAsync();
+    Task<ICollection<Temperature>> GetTemperatureAsync(int boardId);
+    Task DeleteTemperatureAsync(int boardId);
+    
+    Task AddTemperatureAsync(ICollection<Temperature> temperatures);
+    
 }

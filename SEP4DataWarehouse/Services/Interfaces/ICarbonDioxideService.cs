@@ -4,6 +4,8 @@ namespace SEP4DataWarehouse.Services;
 
 public interface ICarbonDioxideService
 {
-    Task<List<CarbonDioxide>> GetCarbonDioxideAsync();
-    Task DeleteCarbonDioxideAsync();
+    Task<ICollection<CarbonDioxide>> GetCarbonDioxideAsync(int boardId);
+    Task DeleteCarbonDioxideAsync(int boardId);
+
+    Task AddCarboDioxideAsync(ICollection<CarbonDioxide> carbonDioxides);
 }

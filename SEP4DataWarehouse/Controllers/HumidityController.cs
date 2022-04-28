@@ -10,22 +10,25 @@ namespace SEP4DataWarehouse.Controllers;
 [Route("api/[controller]")]
 public class HumidityController : ControllerBase
 {
-    private readonly IHumidityService temperatureService;
+    private readonly IHumidityService _humidityService;
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public HumidityController(IHumidityService temperatureService, IExceptionUtilityService exceptionUtility)
+   
+
+    public HumidityController(IHumidityService humidityService, IExceptionUtilityService exceptionUtility)
     {
-        this.temperatureService = temperatureService;
+        _humidityService = humidityService;
         this.exceptionUtility = exceptionUtility;
     }
-    
+
+
     [HttpGet]
-    public async Task<ActionResult<IList<Humidity>>> GetHumidity()
+    public async Task<ActionResult<IList<Humidity>>> GetHumidity(int boardId)
     {
         try
         {
-            IList<Humidity> humidityLogs = await temperatureService.GetHumidityAsync();
-            return Ok(humidityLogs);
+            var carbonDioxideLogs = await _humidityService.GetHumidity(boardId);
+            return Ok(carbonDioxideLogs);
         }
         catch (Exception e)
         {
@@ -36,11 +39,11 @@ public class HumidityController : ControllerBase
  
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteHumidity()
+    public async Task<ActionResult> DeleteHumidityAsync(int boardId)
     {
         try
         {
-            await temperatureService.DeleteHumidityAsync();
+            await _humidityService.DeleteHumidity(boardId);
             return Ok();
         }
         catch (Exception e)

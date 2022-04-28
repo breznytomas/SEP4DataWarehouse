@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SEP4DataWarehouse.Models;
 
-public class Reading
+public class ReadingDTO
 {
     [Required, Key]
     [JsonPropertyName("Id")]

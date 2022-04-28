@@ -5,7 +5,7 @@ namespace SEP4DataWarehouse.Models;
 
 public class Temperature
 {
-    [Required, Key, ]
+    [Required, Key]
     [JsonPropertyName("Id")]
     public long Id { get; set; }
     [Required]

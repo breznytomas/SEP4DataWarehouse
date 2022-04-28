@@ -9,21 +9,21 @@ namespace SEP4DataWarehouse.Controllers;
 [Route("api/[controller]")]
 public class CarbonDioxideController : ControllerBase
 {
-    private readonly ICarbonDioxideService temperatureService;
+    private readonly ICarbonDioxideService _carbonDioxideService;
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public CarbonDioxideController(ICarbonDioxideService temperatureService, IExceptionUtilityService exceptionUtility)
+    public CarbonDioxideController(ICarbonDioxideService carbonDioxideService, IExceptionUtilityService exceptionUtility)
     {
-        this.temperatureService = temperatureService;
+        this._carbonDioxideService = carbonDioxideService;
         this.exceptionUtility = exceptionUtility;
     }
     
     [HttpGet]
-    public async Task<ActionResult<IList<CarbonDioxide>>> GetCarbonDioxide()
+    public async Task<ActionResult<IList<CarbonDioxide>>> GetCarbonDioxide(int boardId)
     {
         try
         {
-            IList<CarbonDioxide> carbonDioxideLogs = await temperatureService.GetCarbonDioxideAsync();
+           var carbonDioxideLogs = await _carbonDioxideService.GetCarbonDioxideAsync(boardId);
             return Ok(carbonDioxideLogs);
         }
         catch (Exception e)
@@ -35,11 +35,11 @@ public class CarbonDioxideController : ControllerBase
  
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteCarbonDioxide()
+    public async Task<ActionResult> DeleteCarbonDioxide(int boardId)
     {
         try
         {
-            await temperatureService.DeleteCarbonDioxideAsync();
+            await _carbonDioxideService.DeleteCarbonDioxideAsync(boardId);
             return Ok();
         }
         catch (Exception e)

@@ -10,21 +10,21 @@ namespace SEP4DataWarehouse.Controllers;
 [Route("api/[controller]")]
 public class LightController : ControllerBase
 {
-    private readonly ILightService temperatureService;
+    private readonly ILightService _lightService;
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public LightController(ILightService temperatureService, IExceptionUtilityService exceptionUtility)
+    public LightController(ILightService lightService, IExceptionUtilityService exceptionUtility)
     {
-        this.temperatureService = temperatureService;
+        this._lightService = lightService;
         this.exceptionUtility = exceptionUtility;
     }
     
     [HttpGet]
-    public async Task<ActionResult<IList<Light>>> GetLight()
+    public async Task<ActionResult<IList<Light>>> GetLight(int boardId)
     {
         try
         {
-            IList<Light> lightLogs = await temperatureService.GetLightAsync();
+            ICollection<Light> lightLogs = await _lightService.GetLightAsync(boardId);
             return Ok(lightLogs);
         }
         catch (Exception e)
@@ -36,11 +36,11 @@ public class LightController : ControllerBase
  
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteLight()
+    public async Task<ActionResult> DeleteLight(int boardId)
     {
         try
         {
-            await temperatureService.DeleteLightAsync();
+            await _lightService.DeleteLightAsync(boardId);
             return Ok();
         }
         catch (Exception e)

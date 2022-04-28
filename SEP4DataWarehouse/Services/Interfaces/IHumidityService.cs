@@ -4,6 +4,8 @@ namespace SEP4DataWarehouse.Services.Interfaces;
 
 public interface IHumidityService
 {
-    Task<List<Humidity>> GetHumidityAsync();
-    Task DeleteHumidityAsync();
+    Task<ICollection<Humidity>> GetHumidity(int boardId);
+    Task DeleteHumidity(int boardId);
+
+    Task AddHumidityAsync(ICollection<Humidity> humidities);
 }

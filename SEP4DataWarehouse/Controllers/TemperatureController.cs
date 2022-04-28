@@ -20,11 +20,11 @@ public class TemperatureController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IList<Temperature>>> GetTemperature()
+    public async Task<ActionResult<ICollection<Temperature>>> GetTemperature(int boardId)
     {
         try
         {
-            IList<Temperature> tempLogs = await temperatureService.GetTemperatureAsync();
+            ICollection<Temperature> tempLogs = await temperatureService.GetTemperatureAsync(boardId);
             return Ok(tempLogs);
         }
         catch (Exception e)
@@ -34,11 +34,11 @@ public class TemperatureController : ControllerBase
     }
     
     [HttpDelete]
-    public async Task<ActionResult> DeleteTemperature()
+    public async Task<ActionResult> DeleteTemperature(int boardId)
     {
         try
         {
-            await temperatureService.DeleteTemperatureAsync();
+            await temperatureService.DeleteTemperatureAsync(boardId);
             
             return Ok();
         }

@@ -7,25 +7,43 @@ namespace SEP4DataWarehouse.Services.Implementations;
 
 public class DbTemperatureService : ITemperatureService
 {
-    private DataWarehouseDbContext context;
+    private DataWarehouseDbContext _context;
 
     public DbTemperatureService(DataWarehouseDbContext context)
     {
-        this.context = context;
+        this._context = context;
     }
 
-    public async Task<List<Temperature>> GetTemperatureAsync()
+    public async Task<ICollection<Temperature>> GetTemperatureAsync(int boardId)
     {
-        return await context.TemperatureSet
-            .ToListAsync();
+        try
+        {
+            var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id == boardId);
+            //todo by tomas null pointer possible reference below has to be addressed
+            if (board.TemperatureList != null) return board.TemperatureList;
+            throw new Exception();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception();
+        }
     }
-
-    public async Task DeleteTemperatureAsync()
+    
+    
+    
+    public async Task AddTemperatureAsync(ICollection<Temperature> temperatures)
     {
-        //todo implement better delete all?
-        context.TemperatureSet.RemoveRange(context.TemperatureSet.ToList());
-        await context.SaveChangesAsync();
-        
         throw new NotImplementedException();
     }
+
+   
+    
+    public async Task DeleteTemperatureAsync(int boardId)
+    {
+        var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id == boardId);
+        board.TemperatureList.Clear();
+    }
+
+  
 }

@@ -3,15 +3,25 @@ using System.Text.Json.Serialization;
 
 namespace SEP4DataWarehouse.Models;
 
-public class Light
+public class TriggerDTO
 {
     [Required, Key]
     [JsonPropertyName("Id")]
     public long Id { get; set; }
+
     [Required]
     [JsonPropertyName("Timestamp")]
     public long Timestamp { get; set; }
+
+    [JsonPropertyName("IsTop")]
+    [Required] public bool IsTop { get; set; }
+
     [Required]
-    [JsonPropertyName("Value")]
-    public float Value { get; set; }
+    [JsonPropertyName("TriggerValue")]
+    public float TriggerValue { get; set; }
+    
+    [Required]
+    [JsonPropertyName("LimitValue")]
+    public float LimitValue { get; set; }
+
 }
