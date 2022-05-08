@@ -7,6 +7,6 @@ public interface ITemperatureService
     Task<ICollection<Temperature>> GetTemperatureAsync(int boardId);
     Task DeleteTemperatureAsync(int boardId);
     
-    Task AddTemperatureAsync(ICollection<Temperature> temperatures);
+    Task AddTemperatureAsync(long id, ICollection<Temperature> temperatures);
     
 }

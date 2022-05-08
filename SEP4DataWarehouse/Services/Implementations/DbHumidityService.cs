@@ -34,9 +34,14 @@ public class DbHumidityService : IHumidityService
     
     
     
-    public async Task AddHumidityAsync(ICollection<Humidity> humidities)
+    public async Task AddHumidityAsync( long id, ICollection<Humidity> humidities)
     {
-        throw new NotImplementedException();
+        var board =  _context.Boards.Include(b => b.HumidityList).First(b => b.Id == id);
+        foreach (var humidity in humidities)
+        {
+            board.HumidityList.Add(humidity);
+        }
+        await _context.SaveChangesAsync();
     }
 
    

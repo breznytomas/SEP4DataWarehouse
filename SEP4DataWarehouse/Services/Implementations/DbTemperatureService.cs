@@ -32,9 +32,14 @@ public class DbTemperatureService : ITemperatureService
     
     
     
-    public async Task AddTemperatureAsync(ICollection<Temperature> temperatures)
+    public async Task AddTemperatureAsync(long id, ICollection<Temperature> temperatures)
     {
-        throw new NotImplementedException();
+        var board =  _context.Boards.Include(b => b.TemperatureList).First(b => b.Id == id);
+        foreach (var temperature in temperatures)
+        {
+            board.TemperatureList.Add(temperature);
+        }
+        await _context.SaveChangesAsync();
     }
 
    

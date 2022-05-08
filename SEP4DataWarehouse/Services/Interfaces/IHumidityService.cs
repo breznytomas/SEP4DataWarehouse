@@ -7,5 +7,5 @@ public interface IHumidityService
     Task<ICollection<Humidity>> GetHumidity(int boardId);
     Task DeleteHumidity(int boardId);
 
-    Task AddHumidityAsync(ICollection<Humidity> humidities);
+    Task AddHumidityAsync(long id, ICollection<Humidity> humidities);
 }

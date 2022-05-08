@@ -28,13 +28,16 @@ builder.Services.AddScoped<IBoardService, DbBoardService>();
     builder.Services.AddScoped<ILightService, DbLightService>();
     builder.Services.AddScoped<ITemperatureService, DbTemperatureService>();
    
+    builder.Services.AddScoped<IExceptionUtilityService, ExceptionUtility>();
+
+
    
 
 
 // builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
     
 
-    builder.Services.AddScoped<IExceptionUtilityService, ExceptionUtility>();
+   
 
     var app = builder.Build();
 

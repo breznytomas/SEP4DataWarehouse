@@ -13,8 +13,12 @@ public class ReadingDTO
     [JsonPropertyName("BoardId")]
     public long BoardId { get; set; }
     
+    [JsonPropertyName("TemperatureList")]
     public ICollection<Temperature> TemperatureList { get; set; }
+    [JsonPropertyName("HumidityList")]
     public ICollection<Humidity> HumidityList { get; set; }
+    [JsonPropertyName("LightLists")]
     public ICollection<Light> LightLists { get; set; }
+    [JsonPropertyName("CarbonDioxideList")]
     public ICollection<CarbonDioxide> CarbonDioxideList { get; set; }
 }

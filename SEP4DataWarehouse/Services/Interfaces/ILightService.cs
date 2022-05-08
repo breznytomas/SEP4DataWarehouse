@@ -8,5 +8,5 @@ public interface ILightService
     Task<ICollection<Light>> GetLightAsync(int boardId);
     Task DeleteLightAsync(int boardId);
 
-    Task AddLightAsync(ICollection<Light> lights );
+    Task AddLightAsync(long id, ICollection<Light> lights );
 }

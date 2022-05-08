@@ -7,5 +7,5 @@ public interface ICarbonDioxideService
     Task<ICollection<CarbonDioxide>> GetCarbonDioxideAsync(int boardId);
     Task DeleteCarbonDioxideAsync(int boardId);
 
-    Task AddCarboDioxideAsync(ICollection<CarbonDioxide> carbonDioxides);
+    Task AddCarboDioxideAsync(long id,ICollection<CarbonDioxide> carbonDioxides);
 }

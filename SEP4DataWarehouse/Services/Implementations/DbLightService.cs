@@ -33,9 +33,14 @@ public class DbLightService : ILightService
 
     
     
-    public async Task AddLightAsync(ICollection<Light> lights)
+    public async Task AddLightAsync(long id, ICollection<Light> lights)
     {
-        throw new NotImplementedException();
+        var board =  _context.Boards.Include(b => b.LightLists).First(b => b.Id == id);
+        foreach (var light in lights)
+        {
+            board.LightLists.Add(light);
+        }
+        await _context.SaveChangesAsync();
     }
     
     public async Task DeleteLightAsync(int boardId)

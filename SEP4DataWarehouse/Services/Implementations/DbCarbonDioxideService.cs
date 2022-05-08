@@ -36,9 +36,14 @@ public class DbCarbonDioxideService: ICarbonDioxideService
     
     
     
-    public async Task AddCarboDioxideAsync(ICollection<CarbonDioxide> carbonDioxides)
+    public async Task AddCarboDioxideAsync(long id, ICollection<CarbonDioxide> carbonDioxides)
     {
-        throw new NotImplementedException();
+        var board =  _context.Boards.Include(b => b.CarbonDioxideList).First(b => b.Id == id);
+        foreach (var carbon in carbonDioxides)
+        {
+            board.CarbonDioxideList.Add(carbon);
+        }
+        await _context.SaveChangesAsync();
     }
 
    
@@ -47,6 +52,7 @@ public class DbCarbonDioxideService: ICarbonDioxideService
     {
         var board = await _context.Boards.Include(b =>b.CarbonDioxideList ).FirstAsync(board => board.Id == boardId);
         board.CarbonDioxideList.Clear();
+        await _context.SaveChangesAsync();
     }
     
    
