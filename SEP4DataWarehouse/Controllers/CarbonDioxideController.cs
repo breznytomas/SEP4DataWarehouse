@@ -19,7 +19,7 @@ public class CarbonDioxideController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IList<CarbonDioxide>>> GetCarbonDioxide(int boardId)
+    public async Task<ActionResult<IList<CarbonDioxide>>> GetCarbonDioxide(string boardId)
     {
         try
         {
@@ -35,7 +35,7 @@ public class CarbonDioxideController : ControllerBase
  
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteCarbonDioxide(int boardId)
+    public async Task<ActionResult> DeleteCarbonDioxide(string boardId)
     {
         try
         {

@@ -20,7 +20,7 @@ public class LightController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IList<Light>>> GetLight(int boardId)
+    public async Task<ActionResult<IList<Light>>> GetLight(string boardId)
     {
         try
         {
@@ -36,7 +36,7 @@ public class LightController : ControllerBase
  
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteLight(int boardId)
+    public async Task<ActionResult> DeleteLight(string boardId)
     {
         try
         {

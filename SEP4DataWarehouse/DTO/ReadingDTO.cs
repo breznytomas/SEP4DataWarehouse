@@ -5,13 +5,11 @@ namespace SEP4DataWarehouse.Models;
 
 public class ReadingDTO
 {
-    [Required, Key]
-    [JsonPropertyName("Id")]
-    public long Id { get; set; }
+   
     
     [Required]
     [JsonPropertyName("BoardId")]
-    public long BoardId { get; set; }
+    public string BoardId { get; set; }
     
     [JsonPropertyName("TemperatureList")]
     public ICollection<Temperature> TemperatureList { get; set; }

@@ -9,16 +9,16 @@ namespace SEP4DataWarehouse.Services.Implementations;
 public class DbCarbonDioxideService: ICarbonDioxideService
 {
     
-    private readonly DataWarehouseDbContext _context;
+    private readonly GreenHouseDbContext _context;
 
 
-    public DbCarbonDioxideService(DataWarehouseDbContext context)
+    public DbCarbonDioxideService(GreenHouseDbContext context)
     {
         _context = context;
     }
     
     
-    public async Task<ICollection<CarbonDioxide>> GetCarbonDioxideAsync(int boardId)
+    public async Task<ICollection<CarbonDioxide>> GetCarbonDioxideAsync(string boardId)
     {
         try
         {
@@ -36,9 +36,9 @@ public class DbCarbonDioxideService: ICarbonDioxideService
     
     
     
-    public async Task AddCarboDioxideAsync(long id, ICollection<CarbonDioxide> carbonDioxides)
+    public async Task AddCarboDioxideAsync(string boardId, ICollection<CarbonDioxide> carbonDioxides)
     {
-        var board =  _context.Boards.Include(b => b.CarbonDioxideList).First(b => b.Id == id);
+        var board =  _context.Boards.Include(b => b.CarbonDioxideList).First(b => b.Id.Equals(boardId));
         foreach (var carbon in carbonDioxides)
         {
             board.CarbonDioxideList.Add(carbon);
@@ -48,7 +48,7 @@ public class DbCarbonDioxideService: ICarbonDioxideService
 
    
     
-    public async Task DeleteCarbonDioxideAsync(int boardId)
+    public async Task DeleteCarbonDioxideAsync(string boardId)
     {
         var board = await _context.Boards.Include(b =>b.CarbonDioxideList ).FirstAsync(board => board.Id == boardId);
         board.CarbonDioxideList.Clear();

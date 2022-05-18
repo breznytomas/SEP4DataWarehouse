@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SEP4DataWarehouse.BusinessLogic;
 using SEP4DataWarehouse.Models;
 using SEP4DataWarehouse.Services;
 using SEP4DataWarehouse.Services.Interfaces;
@@ -14,16 +15,18 @@ public class ReadingController : ControllerBase
     private readonly ILightService _lightService;
     private readonly IHumidityService _humidityService;
     private readonly ITemperatureService _temperatureService;
+    private readonly CheckForValues _checkForValues;
 
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService, IHumidityService humidityService, ITemperatureService temperatureService, IExceptionUtilityService exceptionUtility)
+    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService, IHumidityService humidityService, ITemperatureService temperatureService, CheckForValues checkForValues ,IExceptionUtilityService exceptionUtility)
     {
         _carbonDioxideService = carbonDioxideService;
         _lightService = lightService;
         _humidityService = humidityService;
         _temperatureService = temperatureService;
         this.exceptionUtility = exceptionUtility;
+        this._checkForValues = checkForValues;
     }
 
 
@@ -38,7 +41,8 @@ public class ReadingController : ControllerBase
             
         try
         {
-            //TODO by tomas this is the version for skelleton, insert call to logic here to verity if measurements are out of bounds
+            await _checkForValues.CheckForDeviations(readingDto);
+            //TODO by tomas this is the version for skeleton, insert call to logic here to verity if measurements are out of bounds
             await _temperatureService.AddTemperatureAsync(readingDto.BoardId, readingDto.TemperatureList);
             await _lightService.AddLightAsync(readingDto.BoardId, readingDto.LightLists);
             await _humidityService.AddHumidityAsync(readingDto.BoardId, readingDto.HumidityList);

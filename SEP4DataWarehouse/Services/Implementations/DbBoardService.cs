@@ -8,18 +8,18 @@ namespace SEP4DataWarehouse.Services.Implementations;
 
 public class DbBoardService : IBoardService
 {
-    private readonly DataWarehouseDbContext _context;
+    private readonly GreenHouseDbContext _context;
 
 
-    public DbBoardService(DataWarehouseDbContext context)
+    public DbBoardService(GreenHouseDbContext context)
     {
         _context = context;
     }
 
 
-    public async Task AttachUserToBoard(int boardId, string userEmail)
+    public async Task AttachUserToBoard(string boardId, string userEmail)
     {
-        var board =  _context.Boards.Include(b=> b.UserList).First(b => b.Id==boardId);
+        var board =  _context.Boards.Include(b=> b.UserList).First(b => b.Id.Equals(boardId));
         var user = _context.Users.First(u => u.Email.Equals(userEmail));
         
         board.UserList?.Add(user);
@@ -36,9 +36,9 @@ public class DbBoardService : IBoardService
 
     }
 
-    public async Task DeleteBoard(int boardId)
+    public async Task DeleteBoard(string boardId)
     {
-        var boardToDelete = _context.Boards.Include(b => b.HumidityList).FirstOrDefault(board => board.Id == boardId);
+        var boardToDelete = _context.Boards.Include(b => b.HumidityList).FirstOrDefault(board => board.Id.Equals(boardId));
         _context.Boards.Remove(boardToDelete);
         await _context.SaveChangesAsync();
     }

@@ -5,9 +5,6 @@ namespace SEP4DataWarehouse.Models;
 
 public class EventDto
 {
-    [Required, Key]
-    [JsonPropertyName("Id")]
-    public long Id { get; set; }
     
     [Required]
     [JsonPropertyName("Name")]
@@ -25,7 +22,7 @@ public class EventDto
     [JsonPropertyName("Bottom")]
     public float Bottom { get; set; }
 
-    public ICollection<Trigger> TriggerList { get; set; }
+  
     
     
 }

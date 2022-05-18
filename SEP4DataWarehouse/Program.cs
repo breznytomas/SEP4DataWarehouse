@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SEP4DataWarehouse.BusinessLogic;
 using SEP4DataWarehouse.DbContext;
 using SEP4DataWarehouse.Services;
 using SEP4DataWarehouse.Services.Implementations;
@@ -18,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddSwaggerGen();
 
     //adding the database context
-    builder.Services.AddDbContext<DataWarehouseDbContext>();
+    builder.Services.AddDbContext<GreenHouseDbContext>();
 
     // Adding the service classes so i can use them in the controller, automatically add in the constructors
 builder.Services.AddScoped<IBoardService, DbBoardService>();
@@ -27,6 +28,10 @@ builder.Services.AddScoped<IBoardService, DbBoardService>();
     builder.Services.AddScoped<IHumidityService, DbHumidityService>();
     builder.Services.AddScoped<ILightService, DbLightService>();
     builder.Services.AddScoped<ITemperatureService, DbTemperatureService>();
+    builder.Services.AddScoped<IEventService, DbEventService>();
+    
+
+builder.Services.AddScoped<CheckForValues>();
    
     builder.Services.AddScoped<IExceptionUtilityService, ExceptionUtility>();
 

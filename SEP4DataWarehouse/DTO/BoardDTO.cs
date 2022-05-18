@@ -5,7 +5,9 @@ namespace SEP4DataWarehouse.Models;
 
 public class BoardDTO
 {
-    
+    [JsonPropertyName("Id")] 
+    public string Id { get; set; }
+
     [Required] 
     [JsonPropertyName("Name")]
     public string Name { get; set; }

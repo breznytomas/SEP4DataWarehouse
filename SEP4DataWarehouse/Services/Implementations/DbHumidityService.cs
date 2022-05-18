@@ -8,19 +8,19 @@ namespace SEP4DataWarehouse.Services.Implementations;
 public class DbHumidityService : IHumidityService
 {
     
-    private readonly DataWarehouseDbContext _context;
+    private readonly GreenHouseDbContext _context;
 
-    public DbHumidityService(DataWarehouseDbContext context)
+    public DbHumidityService(GreenHouseDbContext context)
     {
         _context = context;
     }
 
 
-    public async Task<ICollection<Humidity>> GetHumidity(int boardId)
+    public async Task<ICollection<Humidity>> GetHumidity(string boardId)
     {
         try
         {
-            var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id == boardId);
+            var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));
             //todo by tomas null pointer possible reference below has to be addressed better 
             if (board.HumidityList != null) return board.HumidityList;
             throw new Exception();
@@ -34,9 +34,9 @@ public class DbHumidityService : IHumidityService
     
     
     
-    public async Task AddHumidityAsync( long id, ICollection<Humidity> humidities)
+    public async Task AddHumidityAsync( string boardId, ICollection<Humidity> humidities)
     {
-        var board =  _context.Boards.Include(b => b.HumidityList).First(b => b.Id == id);
+        var board =  _context.Boards.Include(b => b.HumidityList).First(b => b.Id.Equals(boardId));
         foreach (var humidity in humidities)
         {
             board.HumidityList.Add(humidity);
@@ -46,9 +46,9 @@ public class DbHumidityService : IHumidityService
 
    
     
-    public async Task DeleteHumidity(int boardId)
+    public async Task DeleteHumidity(string boardId)
     {
-        var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id == boardId);
+        var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));
         board.HumidityList.Clear();
        await _context.SaveChangesAsync();
     }

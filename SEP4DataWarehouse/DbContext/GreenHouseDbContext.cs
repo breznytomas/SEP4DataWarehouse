@@ -5,7 +5,7 @@ using SEP4DataWarehouse.Models;
 
 namespace SEP4DataWarehouse.DbContext
 {
-    public class DataWarehouseDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class GreenHouseDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public DbSet<Temperature> TemperatureSet { get; set; }
         public DbSet<Light> LightSet { get; set; }

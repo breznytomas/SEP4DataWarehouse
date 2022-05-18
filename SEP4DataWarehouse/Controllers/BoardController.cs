@@ -25,7 +25,7 @@ public class BoardController : ControllerBase
 
     
     [HttpGet]
-    public async Task<ActionResult> AttachBoardToUser(int boardId, string userEmail)
+    public async Task<ActionResult> AttachBoardToUser(string boardId, string userEmail)
     {
         try
         {
@@ -50,6 +50,7 @@ public class BoardController : ControllerBase
             {
                 Board board = new Board()
                 {
+                    Id = boardDTO.Id,
                     Name = boardDTO.Name,
                     Description = boardDTO.Description
 
@@ -68,11 +69,11 @@ public class BoardController : ControllerBase
     
     
     [HttpDelete]
-    public async Task<ActionResult> DeleteBoard(int id)
+    public async Task<ActionResult> DeleteBoard(string boardId)
     {
         try
         {
-            await _boardService.DeleteBoard(id);
+            await _boardService.DeleteBoard(boardId);
             return Ok();
         }
         catch (Exception e)

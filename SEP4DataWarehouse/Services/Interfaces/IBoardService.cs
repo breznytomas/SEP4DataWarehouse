@@ -6,9 +6,9 @@ public interface IBoardService
 {
 
 
-     Task AttachUserToBoard(int boardId, string userEmail);
+     Task AttachUserToBoard(string boardId, string userEmail);
      Task<Board> AddBoardAsync(Board board);
-     Task DeleteBoard(int boardId);
+     Task DeleteBoard(string boardId);
 
 
 }

@@ -8,9 +8,9 @@ namespace SEP4DataWarehouse.Services.Implementations;
 public class DbUserService : IUserService
 {
     
-    private DataWarehouseDbContext _context;
+    private GreenHouseDbContext _context;
 
-    public DbUserService(DataWarehouseDbContext context)
+    public DbUserService(GreenHouseDbContext context)
     {
         this._context = context;
     }

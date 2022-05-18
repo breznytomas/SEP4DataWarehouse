@@ -7,18 +7,18 @@ namespace SEP4DataWarehouse.Services.Implementations;
 
 public class DbTemperatureService : ITemperatureService
 {
-    private DataWarehouseDbContext _context;
+    private GreenHouseDbContext _context;
 
-    public DbTemperatureService(DataWarehouseDbContext context)
+    public DbTemperatureService(GreenHouseDbContext context)
     {
         this._context = context;
     }
 
-    public async Task<ICollection<Temperature>> GetTemperatureAsync(int boardId)
+    public async Task<ICollection<Temperature>> GetTemperatureAsync(string boardId)
     {
         try
         {
-            var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id == boardId);
+            var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id.Equals(boardId));
             //todo by tomas null pointer possible reference below has to be addressed
             if (board.TemperatureList != null) return board.TemperatureList;
             throw new Exception();
@@ -32,9 +32,9 @@ public class DbTemperatureService : ITemperatureService
     
     
     
-    public async Task AddTemperatureAsync(long id, ICollection<Temperature> temperatures)
+    public async Task AddTemperatureAsync(string boardId, ICollection<Temperature> temperatures)
     {
-        var board =  _context.Boards.Include(b => b.TemperatureList).First(b => b.Id == id);
+        var board =  _context.Boards.Include(b => b.TemperatureList).First(b => b.Id.Equals(boardId));
         foreach (var temperature in temperatures)
         {
             board.TemperatureList.Add(temperature);
@@ -44,9 +44,9 @@ public class DbTemperatureService : ITemperatureService
 
    
     
-    public async Task DeleteTemperatureAsync(int boardId)
+    public async Task DeleteTemperatureAsync(string boardId)
     {
-        var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id == boardId);
+        var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id.Equals(boardId));
         board.TemperatureList.Clear();
     }
 

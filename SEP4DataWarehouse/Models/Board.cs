@@ -7,7 +7,7 @@ public class Board
 {
     [Key]
     [JsonPropertyName("Id")]
-    public long Id { get; set; }
+    public string Id { get; set; }
     
     [Required] 
     [JsonPropertyName("Name")]

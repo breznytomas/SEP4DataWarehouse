@@ -7,10 +7,10 @@ public interface IEventService
     // todo im adding GetEventsByUser/board, CreateEvent
     // in diagrams there was update event with parameters: id & event, i made it just event
     
-    Task<IList<Event>> GetEvents();
-    Task<IList<Event>> GetEventsByBoardId(long boardId);
-    Task<IList<Event>> GetEventsByUserId(long userId);
-    Task<Event> CreateEvent(Event newEvent);
-    Task<Event> UpdateEvent(long id, Event updateEvent);
-    Task DeleteEvent(long id);
+    Task<ICollection<Event>> GetEventsByBoardId(string boardId);
+    
+    //Task<IList<Event>> GetEventsByUserId(string email);
+    Task AddEventToBoard(EventDto eventDto, string boardId);
+    Task UpdateEvent(string boardId, EventDto eventDto);
+    Task DeleteEventFromBoard(string boardId, long eventId);
 }

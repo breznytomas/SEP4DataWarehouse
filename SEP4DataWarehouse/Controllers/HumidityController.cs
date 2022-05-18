@@ -23,7 +23,7 @@ public class HumidityController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<IList<Humidity>>> GetHumidity(int boardId)
+    public async Task<ActionResult<IList<Humidity>>> GetHumidity(string boardId)
     {
         try
         {
@@ -39,7 +39,7 @@ public class HumidityController : ControllerBase
  
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteHumidityAsync(int boardId)
+    public async Task<ActionResult> DeleteHumidityAsync(string boardId)
     {
         try
         {

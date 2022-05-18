@@ -18,13 +18,14 @@ public class EventController : ControllerBase
         this.eventService = eventService;
         this.exceptionUtility = exceptionUtility;
     }
+    
 
     [HttpGet]
-    public async Task<ActionResult<IList<Event>>> GetEvents()
+    public async Task<ActionResult<IList<Event>>> GetEventsByBoardId(string boardId)
     {
         try
         {
-            IList<Event> eventLogs = await eventService.GetEvents();
+            var eventLogs = await eventService.GetEventsByBoardId(boardId);
             return Ok(eventLogs);
         }
         catch (Exception e)
@@ -32,51 +33,36 @@ public class EventController : ControllerBase
             return exceptionUtility.HandleException(e);
         }
     }
-
-    [HttpGet]
-    [Route("/events/board/{id:long}")]
-    public async Task<ActionResult<IList<Event>>> GetEventsByBoardId([FromRoute] long id)
-    {
-        try
-        {
-            IList<Event> eventLogs = await eventService.GetEventsByBoardId(id);
-            return Ok(eventLogs);
-        }
-        catch (Exception e)
-        {
-            return exceptionUtility.HandleException(e);
-        }
-    }
-
-    [HttpGet]
+    //Todo by tomas I think this one will be deleted as we have many to many between boards and users, so returing all events from multiple boards, i dont think that is a good idea
+    /*[HttpGet]
     [Route("/events/user/{id:long}")]
-    public async Task<ActionResult<IList<Event>>> GetEventsByUserId([FromRoute] long id)
+    public async Task<ActionResult<IList<Event>>> GetEventsByUserId([FromRoute] string boardid)
     {
         try
         {
-            IList<Event> eventLogs = await eventService.GetEventsByUserId(id);
+            IList<Event> eventLogs = await eventService.GetEventsByUserId(boardid);
             return Ok(eventLogs);
         }
         catch (Exception e)
         {
             return exceptionUtility.HandleException(e);
         }
-    }
+    }*/
 
     [HttpPost]
-    public async Task<ActionResult<Event>> CreateEvent([FromBody] Event newEvent)
+    public async Task<ActionResult<Event>> AddEvent([FromBody] EventDto eventDto, string boardId)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            Event createdEvent = await eventService.CreateEvent(newEvent);
+            await eventService.AddEventToBoard(eventDto, boardId);
 
             //todo exception because the class is empty for now
             // return Created($"/{createdEvent.Id}", createdEvent);
-            return Created($"/{0}", createdEvent);
-            
+            return Ok();
+
         }
         catch (Exception e)
         {
@@ -85,16 +71,15 @@ public class EventController : ControllerBase
     }
 
     [HttpPut]
-    [Route("/events/{id:long}")]
-    public async Task<ActionResult<Event>> UpdateEvent([FromRoute] long id, [FromBody] Event updateEvent)
+    public async Task<ActionResult<Event>> UpdateEvent([FromRoute] string boardId, [FromBody] EventDto updateEvent)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            Event updatedEvent = await eventService.UpdateEvent(id, updateEvent);
-            return Ok(updatedEvent);
+            await eventService.UpdateEvent(boardId, updateEvent);
+            return Ok();
         }
         catch (Exception e)
         {
@@ -104,12 +89,11 @@ public class EventController : ControllerBase
 
 
     [HttpDelete]
-    [Route("/events/{id:long}")]
-    public async Task<ActionResult> DeleteEvent([FromRoute] long id)
+    public async Task<ActionResult> DeleteEvent([FromRoute] string  boardId, long eventId)
     {
         try
         {
-            await eventService.DeleteEvent(id);
+            await eventService.DeleteEventFromBoard(boardId, eventId);
             return Ok();
         }
         catch (Exception e)

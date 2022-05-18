@@ -20,7 +20,7 @@ public class TemperatureController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<ICollection<Temperature>>> GetTemperature(int boardId)
+    public async Task<ActionResult<ICollection<Temperature>>> GetTemperature(string boardId)
     {
         try
         {
@@ -34,7 +34,7 @@ public class TemperatureController : ControllerBase
     }
     
     [HttpDelete]
-    public async Task<ActionResult> DeleteTemperature(int boardId)
+    public async Task<ActionResult> DeleteTemperature(string boardId)
     {
         try
         {
