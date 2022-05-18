@@ -42,14 +42,25 @@ public class DbEventService : IEventService
 
     public Task UpdateEvent(string boardId, EventDto eventDto)
     {
+        /*var board = _context.Boards.Include(b => b.EventList).First(b => b.Id.Equals(boardId));
+        var eventToUpdate = board.EventList.First(e=>e.Id==eventDto.)*/
         throw new NotImplementedException();
     }
 
     public async Task DeleteEventFromBoard( string boardId, long eventId)
     {
         var board = await _context.Boards.Include(b => b.EventList).FirstAsync(b => b.Id.Equals(boardId));
-        var eventToDelete = board.EventList.First(e => e.Id == eventId);
-        board.EventList.Remove(eventToDelete);
+
+       
+        
+            var event1 = board.EventList.First(e => e.Id == eventId);
+        
+
+        if (board.EventList != null)
+        {
+            _context.Events.Remove(event1);
+        }
+        
         await _context.SaveChangesAsync();
     }
     

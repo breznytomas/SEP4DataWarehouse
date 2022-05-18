@@ -24,7 +24,7 @@ public class BoardController : ControllerBase
 
 
     
-    [HttpGet]
+    [HttpPut]
     public async Task<ActionResult> AttachBoardToUser(string boardId, string userEmail)
     {
         try
@@ -37,8 +37,24 @@ public class BoardController : ControllerBase
             return exceptionUtility.HandleException(e);
         }
     }
-    
-    [HttpPost]
+
+    [HttpGet]
+    public async Task<ActionResult<IList<Board>>> GetBoardsByUser(string userEmail)
+    {
+        try
+        {
+          var boards= await _boardService.GetBoardsByUser(userEmail);
+          return Ok(boards);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+
+        [HttpPost]
         public async Task<ActionResult<BoardDTO>> AddBoard([FromBody] BoardDTO boardDTO)
         {
             if (!ModelState.IsValid)

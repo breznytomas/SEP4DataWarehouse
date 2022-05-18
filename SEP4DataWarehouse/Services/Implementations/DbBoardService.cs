@@ -28,6 +28,12 @@ public class DbBoardService : IBoardService
        
     }
 
+    public async Task<ICollection<Board>> GetBoardsByUser(string userEmail)
+    {
+        var user = _context.Users.Include(u => u.BoardList).FirstOrDefault(u => u.Email.Equals(userEmail));
+        return user.BoardList;
+    }
+
     public async Task<Board> AddBoardAsync(Board board)
     {
        var entity = await _context.Boards.AddAsync(board);

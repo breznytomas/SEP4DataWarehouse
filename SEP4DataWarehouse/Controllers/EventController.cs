@@ -71,7 +71,7 @@ public class EventController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<Event>> UpdateEvent([FromRoute] string boardId, [FromBody] EventDto updateEvent)
+    public async Task<ActionResult<Event>> UpdateEvent(string boardId, [FromBody] EventDto updateEvent)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -89,7 +89,7 @@ public class EventController : ControllerBase
 
 
     [HttpDelete]
-    public async Task<ActionResult> DeleteEvent([FromRoute] string  boardId, long eventId)
+    public async Task<ActionResult> DeleteEvent(string boardId, long eventId)
     {
         try
         {
