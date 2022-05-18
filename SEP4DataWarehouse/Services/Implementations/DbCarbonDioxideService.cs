@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SEP4DataWarehouse.DbContext;
@@ -41,7 +42,7 @@ public class DbCarbonDioxideService: ICarbonDioxideService
         var board =  _context.Boards.Include(b => b.CarbonDioxideList).First(b => b.Id.Equals(boardId));
         foreach (var carbon in carbonDioxides)
         {
-            board.CarbonDioxideList.Add(carbon);
+            board.CarbonDioxideList?.Add(carbon);
         }
         await _context.SaveChangesAsync();
     }
@@ -51,7 +52,13 @@ public class DbCarbonDioxideService: ICarbonDioxideService
     public async Task DeleteCarbonDioxideAsync(string boardId)
     {
         var board = await _context.Boards.Include(b =>b.CarbonDioxideList ).FirstAsync(board => board.Id == boardId);
-        board.CarbonDioxideList.Clear();
+        var carbonSet = board.CarbonDioxideList;
+
+        if (board.CarbonDioxideList != null)
+        {
+            if (carbonSet != null) _context.CarbonDioxideSet.RemoveRange(carbonSet);
+        }
+        
         await _context.SaveChangesAsync();
     }
     

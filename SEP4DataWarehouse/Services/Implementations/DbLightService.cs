@@ -43,10 +43,17 @@ public class DbLightService : ILightService
         await _context.SaveChangesAsync();
     }
     
+    
     public async Task DeleteLightAsync(string boardId)
     {
         var board = await _context.Boards.Include(b =>b.LightLists ).FirstAsync(board => board.Id.Equals(boardId));
-        board.TemperatureList.Clear();
+        var lightList = board.LightLists;
+
+        if (board.LightLists != null)
+        {
+            if (lightList != null) _context.LightSet.RemoveRange(lightList);
+        }
+        await _context.SaveChangesAsync();
     }
 
     

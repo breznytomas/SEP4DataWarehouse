@@ -37,7 +37,7 @@ public class DbTemperatureService : ITemperatureService
         var board =  _context.Boards.Include(b => b.TemperatureList).First(b => b.Id.Equals(boardId));
         foreach (var temperature in temperatures)
         {
-            board.TemperatureList.Add(temperature);
+            board.TemperatureList?.Add(temperature);
         }
         await _context.SaveChangesAsync();
     }
@@ -47,7 +47,12 @@ public class DbTemperatureService : ITemperatureService
     public async Task DeleteTemperatureAsync(string boardId)
     {
         var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id.Equals(boardId));
-        board.TemperatureList.Clear();
+        var temperatureList = board.TemperatureList;
+
+        if (board.TemperatureList != null)
+        {
+            if (temperatureList != null) _context.TemperatureSet.RemoveRange(temperatureList);
+        }
     }
 
   

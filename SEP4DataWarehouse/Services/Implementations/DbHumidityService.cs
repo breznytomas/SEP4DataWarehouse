@@ -49,7 +49,13 @@ public class DbHumidityService : IHumidityService
     public async Task DeleteHumidity(string boardId)
     {
         var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));
-        board.HumidityList.Clear();
-       await _context.SaveChangesAsync();
+        var humidityList = board.HumidityList;
+
+        if (board.HumidityList != null)
+        {
+            if (humidityList != null) _context.HumiditySet.RemoveRange(humidityList);
+        }
+      
+        await _context.SaveChangesAsync();
     }
 }
