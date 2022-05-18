@@ -53,6 +53,8 @@ public class DbTemperatureService : ITemperatureService
         {
             if (temperatureList != null) _context.TemperatureSet.RemoveRange(temperatureList);
         }
+
+        await _context.SaveChangesAsync();
     }
 
   

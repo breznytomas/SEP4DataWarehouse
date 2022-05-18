@@ -50,6 +50,7 @@ public class DbEventService : IEventService
         var board = await _context.Boards.Include(b => b.EventList).FirstAsync(b => b.Id.Equals(boardId));
         var eventToDelete = board.EventList.First(e => e.Id == eventId);
         board.EventList.Remove(eventToDelete);
+        await _context.SaveChangesAsync();
     }
     
     
