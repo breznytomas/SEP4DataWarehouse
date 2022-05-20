@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddDbContext<GreenHouseDbContext>();
 
     // Adding the service classes so i can use them in the controller, automatically add in the constructors
-builder.Services.AddScoped<IBoardService, DbBoardService>();
+    builder.Services.AddScoped<IBoardService, DbBoardService>();
     builder.Services.AddScoped<IUserService, DbUserService>();
     builder.Services.AddScoped<ICarbonDioxideService, DbCarbonDioxideService>();
     builder.Services.AddScoped<IHumidityService, DbHumidityService>();
@@ -31,7 +31,7 @@ builder.Services.AddScoped<IBoardService, DbBoardService>();
     builder.Services.AddScoped<IEventService, DbEventService>();
     
 
-builder.Services.AddScoped<CheckForValues>();
+    builder.Services.AddScoped<CheckForValues>();
    
     builder.Services.AddScoped<IExceptionUtilityService, ExceptionUtility>();
 

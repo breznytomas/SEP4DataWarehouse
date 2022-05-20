@@ -19,7 +19,9 @@ public class ReadingController : ControllerBase
 
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService, IHumidityService humidityService, ITemperatureService temperatureService, CheckForValues checkForValues ,IExceptionUtilityService exceptionUtility)
+    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService,
+        IHumidityService humidityService, ITemperatureService temperatureService, CheckForValues checkForValues,
+        IExceptionUtilityService exceptionUtility)
     {
         _carbonDioxideService = carbonDioxideService;
         _lightService = lightService;
@@ -30,7 +32,6 @@ public class ReadingController : ControllerBase
     }
 
 
-    
     [HttpPost]
     public async Task<ActionResult<BoardDTO>> AddReading([FromBody] ReadingDTO readingDto)
     {
@@ -38,7 +39,7 @@ public class ReadingController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-            
+
         try
         {
             await _checkForValues.CheckForDeviations(readingDto);
@@ -48,8 +49,6 @@ public class ReadingController : ControllerBase
             await _humidityService.AddHumidityAsync(readingDto.BoardId, readingDto.HumidityList);
             await _carbonDioxideService.AddCarboDioxideAsync(readingDto.BoardId, readingDto.CarbonDioxideList);
             return Ok("Added successfully");
-
-
         }
         catch (Exception e)
         {
@@ -57,5 +56,4 @@ public class ReadingController : ControllerBase
             return exceptionUtility.HandleException(e);
         }
     }
-
 }

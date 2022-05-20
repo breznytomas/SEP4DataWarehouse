@@ -1,0 +1,51 @@
+{
+  "Id": 12,
+  "Name": "LightEvent",
+  "Type": 3,
+  "Top": 80,
+  "Bottom": 10,
+  "TriggerList": [
+    {
+      "Id": 88,
+      "Timestamp": 1652977039,
+      "IsTop": false,
+      "TriggerValue": 97,
+      "LimitValue": 100
+    },
+    {
+      "Id": 89,
+      "Timestamp": 1652977039,
+      "IsTop": false,
+      "TriggerValue": 72,
+      "LimitValue": 100
+    },
+    {
+      "Id": 90,
+      "Timestamp": 1652977039,
+      "IsTop": false,
+      "TriggerValue": 40,
+      "LimitValue": 100
+    },
+    {
+      "Id": 97,
+      "Timestamp": 1652977589,
+      "IsTop": false,
+      "TriggerValue": 74,
+      "LimitValue": 100
+    },
+    {
+      "Id": 98,
+      "Timestamp": 1652977589,
+      "IsTop": false,
+      "TriggerValue": 74,
+      "LimitValue": 100
+    },
+    {
+      "Id": 99,
+      "Timestamp": 1652977589,
+      "IsTop": false,
+      "TriggerValue": 39,
+      "LimitValue": 100
+    }
+  ]
+}
