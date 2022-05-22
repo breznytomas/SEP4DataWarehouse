@@ -28,25 +28,64 @@
 
     <ItemGroup>
 
-        <Content Include="UnitTests\ExpectedOutput\lowTrigger.json" />
+        <Content Include="UnitTests\InputObjects\readingInputHigh.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\InputObjects\readingInputLow.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\InputObjects\readingInputMiddle.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
 
-        <Content Include="UnitTests\InputObjects\co2Event.json" />
+        <Content Include="UnitTests\InputObjects\readingInputTopEdge.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\InputObjects\readingInputBottomEdge.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
 
-        <Content Include="UnitTests\InputObjects\humidityEvent.json" />
+        <Content Include="UnitTests\InputObjects\co2Event.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\InputObjects\humidityEvent.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\InputObjects\lightEvent.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\InputObjects\temperatureEvent.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
 
-        <Content Include="UnitTests\InputObjects\lightEvent.json" />
-
-        <Content Include="UnitTests\InputObjects\readingInputBottomEdge.json" />
-
-        <Content Include="UnitTests\InputObjects\readingInputHigh.json" />
-
-        <Content Include="UnitTests\InputObjects\readingInputLow.json" />
-
-        <Content Include="UnitTests\InputObjects\readingInputMiddle.json" />
-
-        <Content Include="UnitTests\InputObjects\readingInputTopEdge.json" />
-
-        <Content Include="UnitTests\InputObjects\temperatureEvent.json" />
+        <Content Include="UnitTests\ExpectedOutput\lowTrigger.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="UnitTests\ExpectedOutput\highTrigger.json">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
         
         
         

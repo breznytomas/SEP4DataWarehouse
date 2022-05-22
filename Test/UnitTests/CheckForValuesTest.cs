@@ -203,7 +203,7 @@ public class CheckForValuesTest
     private ReadingDto LoadReadingFromJson(string filename)
     {
         // string path = "../../../InputObjects/";
-        string path = "./InputObjects/";
+        string path = "./UnitTests/InputObjects/";
         
         using StreamReader r = new StreamReader(path + filename);
         
@@ -218,7 +218,7 @@ public class CheckForValuesTest
     private Event LoadEventFromJson(string filename)
     {
         // string path = "../../../InputObjects/";
-        string path = "./InputObjects/";
+        string path = "./UnitTests/InputObjects/";
         
         using StreamReader r = new StreamReader(path + filename);
         
@@ -234,7 +234,7 @@ public class CheckForValuesTest
     private Trigger LoadExpectedFromJson(string filename)
     {
         // string path = "../../../ExpectedOutput/";
-        string path = "./ExpectedOutput/";
+        string path = "./UnitTests/ExpectedOutput/";
         
         using StreamReader r = new StreamReader(path + filename);
         
