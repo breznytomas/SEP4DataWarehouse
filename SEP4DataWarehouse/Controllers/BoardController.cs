@@ -55,7 +55,7 @@ public class BoardController : ControllerBase
 
 
         [HttpPost]
-        public async Task<ActionResult<BoardDTO>> AddBoard([FromBody] BoardDTO boardDTO)
+        public async Task<ActionResult<BoardDto>> AddBoard([FromBody] BoardDto boardDTO)
         {
             if (!ModelState.IsValid)
             {

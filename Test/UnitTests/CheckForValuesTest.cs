@@ -114,7 +114,7 @@ public class CheckForValuesTest
     }
 
     [Fact]
-    public void DontCreateTriggersTest()
+    public void DontCreateTriggersTestMiddle()
     {
         // prepare inputs
         var reading = LoadReadingFromJson("readingInputMiddle.json");
@@ -141,8 +141,66 @@ public class CheckForValuesTest
         Assert.Empty(temperatureTriggers);
         
     }
+    
+    [Fact]
+    public void DontCreateTriggersTestTopEdge()
+    {
+        // prepare inputs
+        var reading = LoadReadingFromJson("readingInputTopEdge.json");
+        
 
-    public ReadingDTO LoadReadingFromJson(string filename)
+        var co2Event = LoadEventFromJson("co2Event.json");
+        var humidityEvent = LoadEventFromJson("humidityEvent.json");
+        var lightEvent = LoadEventFromJson("lightEvent.json");
+        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        
+        // get values
+        
+        var co2Triggers = CheckForValues.GetCo2Triggers(reading, co2Event);
+        var humidityTriggers = CheckForValues.GetHumidityTriggers(reading, humidityEvent);
+        var lightTriggers = CheckForValues.GetLightTriggers(reading, lightEvent);
+        var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
+        
+        
+        // assert
+
+        Assert.Empty(co2Triggers);
+        Assert.Empty(humidityTriggers);
+        Assert.Empty(lightTriggers);
+        Assert.Empty(temperatureTriggers);
+        
+    }
+    
+    [Fact]
+    public void DontCreateTriggersTestBottomEdge()
+    {
+        // prepare inputs
+        var reading = LoadReadingFromJson("readingInputBottomEdge.json");
+        
+
+        var co2Event = LoadEventFromJson("co2Event.json");
+        var humidityEvent = LoadEventFromJson("humidityEvent.json");
+        var lightEvent = LoadEventFromJson("lightEvent.json");
+        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        
+        // get values
+        
+        var co2Triggers = CheckForValues.GetCo2Triggers(reading, co2Event);
+        var humidityTriggers = CheckForValues.GetHumidityTriggers(reading, humidityEvent);
+        var lightTriggers = CheckForValues.GetLightTriggers(reading, lightEvent);
+        var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
+        
+        
+        // assert
+
+        Assert.Empty(co2Triggers);
+        Assert.Empty(humidityTriggers);
+        Assert.Empty(lightTriggers);
+        Assert.Empty(temperatureTriggers);
+        
+    }
+
+    private ReadingDto LoadReadingFromJson(string filename)
     {
         // string path = "../../../InputObjects/";
         string path = "./InputObjects/";
@@ -150,14 +208,14 @@ public class CheckForValuesTest
         using StreamReader r = new StreamReader(path + filename);
         
         string json = r.ReadToEnd();
-        var reading = JsonSerializer.Deserialize<ReadingDTO>(json);
+        var reading = JsonSerializer.Deserialize<ReadingDto>(json);
         
         testOutputHelper.WriteLine("read from: " + path + filename);
         r.Close();
         return reading;
     }
-    
-    public Event LoadEventFromJson(string filename)
+
+    private Event LoadEventFromJson(string filename)
     {
         // string path = "../../../InputObjects/";
         string path = "./InputObjects/";
@@ -173,7 +231,7 @@ public class CheckForValuesTest
         return e;
     }
 
-    public Trigger LoadExpectedFromJson(string filename)
+    private Trigger LoadExpectedFromJson(string filename)
     {
         // string path = "../../../ExpectedOutput/";
         string path = "./ExpectedOutput/";

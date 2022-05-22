@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SEP4DataWarehouse.Models;
 
-public class BoardDTO
+public class BoardDto
 {
     [JsonPropertyName("Id")] 
     public string Id { get; set; }
