@@ -15,6 +15,7 @@ namespace SEP4DataWarehouse.DbContext
         public DbSet<Event> Events { get; set; }
         public DbSet<Trigger> Triggers { get; set; }
         public DbSet<Board> Boards { get; set; }
+        public DbSet<Reading> Readings { get; set; }
        
        
 

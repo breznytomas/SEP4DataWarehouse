@@ -16,12 +16,11 @@ public class ReadingController : ControllerBase
     private readonly IHumidityService _humidityService;
     private readonly ITemperatureService _temperatureService;
     private readonly CheckForValues _checkForValues;
+    private readonly IReadingService _readingService;
 
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService,
-        IHumidityService humidityService, ITemperatureService temperatureService, CheckForValues checkForValues,
-        IExceptionUtilityService exceptionUtility)
+    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService, IHumidityService humidityService, ITemperatureService temperatureService, CheckForValues checkForValues, IReadingService readingService ,IExceptionUtilityService exceptionUtility)
     {
         _carbonDioxideService = carbonDioxideService;
         _lightService = lightService;
@@ -29,9 +28,12 @@ public class ReadingController : ControllerBase
         _temperatureService = temperatureService;
         this.exceptionUtility = exceptionUtility;
         this._checkForValues = checkForValues;
+        _readingService = readingService;
+
     }
 
 
+    
     [HttpPost]
     public async Task<ActionResult<BoardDTO>> AddReading([FromBody] ReadingDTO readingDto)
     {
@@ -39,7 +41,7 @@ public class ReadingController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-
+            
         try
         {
             await _checkForValues.CheckForDeviations(readingDto);
@@ -48,7 +50,10 @@ public class ReadingController : ControllerBase
             await _lightService.AddLightAsync(readingDto.BoardId, readingDto.LightLists);
             await _humidityService.AddHumidityAsync(readingDto.BoardId, readingDto.HumidityList);
             await _carbonDioxideService.AddCarboDioxideAsync(readingDto.BoardId, readingDto.CarbonDioxideList);
+            await _readingService.AddReading(readingDto);
             return Ok("Added successfully");
+
+
         }
         catch (Exception e)
         {
@@ -56,4 +61,5 @@ public class ReadingController : ControllerBase
             return exceptionUtility.HandleException(e);
         }
     }
+
 }

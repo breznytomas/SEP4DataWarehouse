@@ -11,7 +11,7 @@ public class Reading
     
     [Required]
     [JsonPropertyName("BoardId")]
-    public long BoardId { get; set; }
+    public string BoardId { get; set; }
     
     public ICollection<Temperature> TemperatureList { get; set; }
     public ICollection<Humidity> HumidityList { get; set; }
