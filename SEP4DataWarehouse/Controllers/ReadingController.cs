@@ -35,7 +35,7 @@ public class ReadingController : ControllerBase
 
     
     [HttpPost]
-    public async Task<ActionResult<BoardDTO>> AddReading([FromBody] ReadingDTO readingDto)
+    public async Task<ActionResult<BoardDto>> AddReading([FromBody] ReadingDto readingDto)
     {
         if (!ModelState.IsValid)
         {
