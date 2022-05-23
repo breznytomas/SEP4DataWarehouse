@@ -14,10 +14,10 @@ using SEP4DataWarehouse.Utilities;
         // private ReadingController _readingController = new ReadingController(new DbReadingService(), new ExceptionUtility());
         
         //designed to pass
-        // [Fact]
-        // public void AdditionTestPass()
-        // {
-        //     Assert.Equal(2, (1+1) );
-        // }
+        [Fact]
+        public void AdditionTestPass()
+        {
+            Assert.Equal(2, (1+1) );
+        }
         
     }

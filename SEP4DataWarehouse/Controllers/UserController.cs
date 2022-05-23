@@ -18,7 +18,7 @@ public class UserController : ControllerBase
 
 
     [HttpPost]
-    public async Task<ActionResult<UserDto>> AddUser([FromBody] UserDto userDTO)
+    public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO userDTO)
     {
         if (!ModelState.IsValid)
         {
@@ -45,7 +45,7 @@ public class UserController : ControllerBase
     
     [Route("Login")]
     [HttpPost]
-    public async Task<ActionResult<User>> LoginUser([FromBody] UserDto userDTO)
+    public async Task<ActionResult<User>> LoginUser([FromBody] UserDTO userDTO)
     {
         if (!ModelState.IsValid)
         {

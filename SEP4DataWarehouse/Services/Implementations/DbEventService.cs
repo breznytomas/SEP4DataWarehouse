@@ -18,10 +18,7 @@ public class DbEventService : IEventService
     public async Task<ICollection<Event>> GetEventsByBoardId(string boardId)
     {
 
-        var board = await _context.Boards
-            .Include(b => b.EventList)
-            .ThenInclude(e=> e.TriggerList)
-            .FirstAsync(b => b.Id == boardId);
+        var board = await _context.Boards.Include(b => b.EventList).ThenInclude(e=> e.TriggerList).FirstAsync(b => b.Id == boardId);
         return board.EventList;
         
     }

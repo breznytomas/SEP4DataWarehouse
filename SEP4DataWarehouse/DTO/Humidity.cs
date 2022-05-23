@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SEP4DataWarehouse.Models;
 
-public class HumidityDto
+public class HumidityDTO
 {
     [Required, Key]
     [JsonPropertyName("Id")]

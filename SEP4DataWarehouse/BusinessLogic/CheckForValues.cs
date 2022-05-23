@@ -19,7 +19,7 @@ public class CheckForValues
 
 
     // First version of the method
-    /*public async Task CheckForDeviations2(ReadingDto reading)
+    /*public async Task CheckForDeviations2(ReadingDTO reading)
     {
         var board = _context.Boards.Include(b => b.EventList).ThenInclude(e => e.TriggerList)
             .First(b => b.Id.Equals(reading.BoardId));
@@ -148,7 +148,7 @@ public class CheckForValues
         await _context.SaveChangesAsync();
     }*/
 
-    public async Task CheckForDeviations(ReadingDto reading)
+    public async Task CheckForDeviations(ReadingDTO reading)
     {
         var board = _context.Boards.Include(b => b.EventList).ThenInclude(e => e.TriggerList)
             .First(b => b.Id.Equals(reading.BoardId));
@@ -193,7 +193,7 @@ public class CheckForValues
     }
     
     
-    public static ICollection<Trigger> GetHumidityTriggers(ReadingDto reading, Event humidityEvent)
+    public static ICollection<Trigger> GetHumidityTriggers(ReadingDTO reading, Event humidityEvent)
     {
         ICollection<Trigger> triggers = new List<Trigger>();
 
@@ -225,7 +225,7 @@ public class CheckForValues
         return triggers;
     }
 
-    public static ICollection<Trigger> GetTemperatureTriggers(ReadingDto reading, Event temperatureEvent)
+    public static ICollection<Trigger> GetTemperatureTriggers(ReadingDTO reading, Event temperatureEvent)
     {
         ICollection<Trigger> triggers = new List<Trigger>();
         
@@ -257,7 +257,7 @@ public class CheckForValues
         return triggers;
     }
 
-    public static ICollection<Trigger> GetCo2Triggers(ReadingDto reading, Event co2Event)
+    public static ICollection<Trigger> GetCo2Triggers(ReadingDTO reading, Event co2Event)
     {
         ICollection<Trigger> triggers = new List<Trigger>();
         
@@ -289,7 +289,7 @@ public class CheckForValues
         return triggers;
     }
     
-    public static ICollection<Trigger> GetLightTriggers(ReadingDto reading, Event lightEvent)
+    public static ICollection<Trigger> GetLightTriggers(ReadingDTO reading, Event lightEvent)
     {
         ICollection<Trigger> triggers = new List<Trigger>();
         

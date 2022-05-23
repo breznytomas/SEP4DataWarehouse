@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SEP4DataWarehouse.Models;
 
-public class UserDto
+public class UserDTO
 {
     
     [Required]
