@@ -15,7 +15,7 @@ public class DbReadingService: IReadingService
     }
 
 
-    public async Task AddReading(ReadingDTO readingDto)
+    public async Task AddReading(ReadingDto readingDto)
     {
 
         var reading = new Reading()

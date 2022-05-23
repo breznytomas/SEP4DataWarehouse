@@ -4,7 +4,7 @@ namespace SEP4DataWarehouse.Services;
 
 public interface IReadingService
 {
-    Task  AddReading(ReadingDTO readingDto);
+    Task  AddReading(ReadingDto readingDto);
     
     
 
