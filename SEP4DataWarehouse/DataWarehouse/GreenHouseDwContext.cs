@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Npgsql;
 
 namespace SEP4DataWarehouse.DataWarehouseModels
 {
@@ -25,13 +26,31 @@ namespace SEP4DataWarehouse.DataWarehouseModels
         public virtual DbSet<Dimuser> Dimusers { get; set; } = null!;
         public virtual DbSet<Factmeasurement> Factmeasurements { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(getDatabaseUrl());
+
+        private String getDatabaseUrl()
         {
-            if (!optionsBuilder.IsConfigured)
+            string? databaseUrl;
+            #if (DEBUG)
+            databaseUrl = System.IO.File.ReadAllText("./DataWarehouse/DwString.txt");
+            #else
+            // for heroku
+            databaseUrl = Environment.GetEnvironmentVariable("AMAZON_DB");
+            #endif
+            var databaseUri = new Uri(databaseUrl);
+            var userInfo = databaseUri.UserInfo.Split(':');
+
+            var builder = new NpgsqlConnectionStringBuilder
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("Host=sep4.cwtqckpflrgx.eu-north-1.rds.amazonaws.com;Database=GreenhouseDB;Username=JohnyJointowski;Password=chujchuj");
-            }
+                Host = databaseUri.Host,
+                Port = databaseUri.Port,
+                Username = userInfo[0],
+                Password = userInfo[1],
+                Database = databaseUri.LocalPath.TrimStart('/')
+            };
+            return builder.ToString();
+
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

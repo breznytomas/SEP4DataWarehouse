@@ -1,0 +1,1 @@
+Host=sep4.cwtqckpflrgx.eu-north-1.rds.amazonaws.com;Database=GreenhouseDB;Username=JohnyJointowski;Password=chujchuj

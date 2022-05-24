@@ -28,13 +28,13 @@ namespace SEP4DataWarehouse.DbContext
         // if in debug build configuration it takes the string from a file. Remember to have this file here and to set your build config to 'debug' (next to the 'Run' button) when running the app locally 
         // if in release configuration it takes the string from environment variable that is provided by heroku to the running docker container
         // don't touch this method also. if something appears to be broken maybe the connection string changed due to maintenance, in that case let me know -oliver
-        public String getDatabaseUrl()
+        private String getDatabaseUrl()
         {
             string? databaseUrl;
             #if (DEBUG)
             databaseUrl = System.IO.File.ReadAllText("./DbContext/DbString.txt");
             #else
-            //for heroku
+            // for heroku
             databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             #endif
             var databaseUri = new Uri(databaseUrl);
