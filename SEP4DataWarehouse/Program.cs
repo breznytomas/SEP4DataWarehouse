@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEP4DataWarehouse.BusinessLogic;
+using SEP4DataWarehouse.DataWarehouseModels;
 using SEP4DataWarehouse.DbContext;
 using SEP4DataWarehouse.Services;
 using SEP4DataWarehouse.Services.Implementations;
@@ -20,6 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     //adding the database context
     builder.Services.AddDbContext<GreenHouseDbContext>();
+    builder.Services.AddDbContext<GreenHouseDwContext>();
 
     // Adding the service classes so i can use them in the controller, automatically add in the constructors
     builder.Services.AddScoped<IBoardService, DbBoardService>();

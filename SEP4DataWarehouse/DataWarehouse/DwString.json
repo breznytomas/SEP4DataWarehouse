@@ -1,0 +1,10 @@
+
+{
+"username": "JohnyJointowski",
+"password": "chujchuj",
+"hostname": "sep4.cwtqckpflrgx.eu-north-1.rds.amazonaws.com",
+"port": "5432",
+"dbname" : "GreenhouseDB"
+}
+
+

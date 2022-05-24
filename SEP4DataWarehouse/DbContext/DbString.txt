@@ -1,0 +1,1 @@
+postgres://degadzswbfaftt:64ddcae8c79ae08686455245c4fb6b7b1dd2969a2b7e0a980de733150a9a450b@ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d3d3loac91bkkt
