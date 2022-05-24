@@ -37,20 +37,7 @@ namespace SEP4DataWarehouse.DataWarehouseModels
             // for heroku
             databaseUrl = Environment.GetEnvironmentVariable("AMAZON_DB");
             #endif
-            var databaseUri = new Uri(databaseUrl);
-            var userInfo = databaseUri.UserInfo.Split(':');
-
-            var builder = new NpgsqlConnectionStringBuilder
-            {
-                Host = databaseUri.Host,
-                Port = databaseUri.Port,
-                Username = userInfo[0],
-                Password = userInfo[1],
-                Database = databaseUri.LocalPath.TrimStart('/')
-            };
-            return builder.ToString();
-
-            
+            return databaseUrl;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
