@@ -31,7 +31,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<ILightService, DbLightService>();
     builder.Services.AddScoped<ITemperatureService, DbTemperatureService>();
     builder.Services.AddScoped<IEventService, DbEventService>();
-builder.Services.AddScoped<IReadingService, DbReadingService>();
+    builder.Services.AddScoped<IReadingService, DbReadingService>();
     
 
     builder.Services.AddScoped<CheckForValues>();
