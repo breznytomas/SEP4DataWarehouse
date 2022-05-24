@@ -22,11 +22,8 @@
 
     <ItemGroup>
       <Folder Include="Contexts" />
-      <Folder Include="Controllers\DwControllers" />
       <Folder Include="Migrations" />
       <Folder Include="Models" />
-      <Folder Include="Services\DwServices\Implementations" />
-      <Folder Include="Services\DwServices\Interfaces" />
     </ItemGroup>
 
 </Project>

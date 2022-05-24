@@ -6,9 +6,12 @@ using Microsoft.Extensions.Hosting;
 using SEP4DataWarehouse.BusinessLogic;
 using SEP4DataWarehouse.Contexts.DbContext;
 using SEP4DataWarehouse.Contexts.DwContext;
+using SEP4DataWarehouse.Models.DwModels;
 using SEP4DataWarehouse.Services;
 using SEP4DataWarehouse.Services.DbServices;
 using SEP4DataWarehouse.Services.DbServices.Implementations;
+using SEP4DataWarehouse.Services.DwServices.Implementations;
+using SEP4DataWarehouse.Services.DwServices.Interfaces;
 using SEP4DataWarehouse.Utilities;
 
 
@@ -32,6 +35,10 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<ITemperatureService, DbTemperatureService>();
     builder.Services.AddScoped<IEventService, DbEventService>();
     builder.Services.AddScoped<IReadingService, DbReadingService>();
+
+
+    //Adding the service classes for DataWarehouse
+    builder.Services.AddScoped<IDimHumidity, DimHumidityService>();
     
 
     builder.Services.AddScoped<CheckForValues>();
