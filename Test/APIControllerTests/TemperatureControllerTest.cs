@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -9,7 +10,7 @@ using SEP4DataWarehouse.Utilities;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Test.IntegrationTests;
+namespace Test.APIControllerTests;
 
 public class TemperatureControllerTest
 {
@@ -48,11 +49,16 @@ public class TemperatureControllerTest
         
         // assert
         
-        foreach (var temps in value)
+        // Same elements
+        var i = 0;
+        foreach (var temp in await Multiple())
         {
-            testOutputHelper.WriteLine(temps.Value.ToString());
+            Assert.Equal( JsonSerializer.Serialize(temp), JsonSerializer.Serialize(value[i]));
+            
+            i++;
         }
         
+        // same size
         Assert.Equal(3, value.Count);
     }
 

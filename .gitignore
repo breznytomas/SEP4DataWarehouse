@@ -6,6 +6,9 @@
 # Database string
 DbContext/DbString.txt
 
+# Datawarehouse string 
+DataWarehouse/DwString.json
+
 # Test obj
 /Test/obj
 /Test/bin
