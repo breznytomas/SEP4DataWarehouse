@@ -1,11 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using SEP4DataWarehouse.Models.DbModels;
 
-namespace SEP4DataWarehouse.DTO;
+namespace SEP4DataWarehouse.Models.DbModels;
 
-public class EventDto
+public class Event
 {
+    [Required, Key]
+    [JsonPropertyName("Id")]
+    public long Id { get; set; }
     
     [Required]
     [JsonPropertyName("Name")]
@@ -23,7 +25,7 @@ public class EventDto
     [JsonPropertyName("Bottom")]
     public float Bottom { get; set; }
 
-  
+    public ICollection<Trigger> TriggerList { get; set; }
     
     
 }

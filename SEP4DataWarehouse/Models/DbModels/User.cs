@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SEP4DataWarehouse.DTO;
+namespace SEP4DataWarehouse.Models.DbModels;
 
-public class UserDto
+public class User
 {
     
-    [Required]
+    [Key]
     [JsonPropertyName("Email")]
     public string Email { get; set; }
     
@@ -14,6 +14,6 @@ public class UserDto
     [JsonPropertyName("Password")]
     public string Password { get; set; }
     
-   
+    public ICollection<Board> BoardList { get; set; }
 
 }

@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SEP4DataWarehouse.DTO;
+namespace SEP4DataWarehouse.Models.DbModels;
 
-public class HumidityDto
+public class Light
 {
     [Required, Key]
     [JsonPropertyName("Id")]

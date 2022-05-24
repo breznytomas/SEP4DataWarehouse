@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SEP4DataWarehouse.DTO;
+namespace SEP4DataWarehouse.Models.DbModels;
 
-public class TriggerDto
+public class Trigger
 {
     [Required, Key]
     [JsonPropertyName("Id")]

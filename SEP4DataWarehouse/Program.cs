@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SEP4DataWarehouse.BusinessLogic;
-using SEP4DataWarehouse.DataWarehouseModels;
-using SEP4DataWarehouse.DbContext;
+using SEP4DataWarehouse.Contexts.DbContext;
+using SEP4DataWarehouse.Contexts.DwContext;
 using SEP4DataWarehouse.Services;
-using SEP4DataWarehouse.Services.Implementations;
-using SEP4DataWarehouse.Services.Interfaces;
+using SEP4DataWarehouse.Services.DbServices;
+using SEP4DataWarehouse.Services.DbServices.Implementations;
 using SEP4DataWarehouse.Utilities;
 
 

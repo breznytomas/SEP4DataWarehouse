@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using SEP4DataWarehouse.DbContext;
-using SEP4DataWarehouse.Models;
+using SEP4DataWarehouse.Contexts.DbContext;
+using SEP4DataWarehouse.DTO;
+using SEP4DataWarehouse.Models.DbModels;
 using SEP4DataWarehouse.Services;
-using SEP4DataWarehouse.Services.Interfaces;
 
 namespace SEP4DataWarehouse.BusinessLogic;
 

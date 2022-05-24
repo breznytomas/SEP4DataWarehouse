@@ -1,13 +1,12 @@
-using System;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using SEP4DataWarehouse.BusinessLogic;
-using SEP4DataWarehouse.Models;
+using SEP4DataWarehouse.DTO;
+using SEP4DataWarehouse.Models.DbModels;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Test;
+namespace Test.UnitTests;
 
 public class CheckForValuesTest
 {

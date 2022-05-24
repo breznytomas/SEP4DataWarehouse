@@ -1,4 +1,4 @@
-namespace SEP4DataWarehouse.Models;
+namespace SEP4DataWarehouse.DTO;
 
 public enum EventTypesDto
 {
