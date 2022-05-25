@@ -1,4 +1,4 @@
-using SEP4DataWarehouse.DTO;
+using SEP4DataWarehouse.DTO.DbDTO;
 using SEP4DataWarehouse.Models.DbModels;
 
 namespace SEP4DataWarehouse.Services.DbServices;

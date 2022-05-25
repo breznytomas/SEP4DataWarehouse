@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using SEP4DataWarehouse.Models.DbModels;
 
-namespace SEP4DataWarehouse.DTO;
+namespace SEP4DataWarehouse.DTO.DbDTO;
 
 public class EventDto
 {

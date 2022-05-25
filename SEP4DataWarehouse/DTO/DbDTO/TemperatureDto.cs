@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace SEP4DataWarehouse.DTO;
+namespace SEP4DataWarehouse.DTO.DbDTO;
 
 public class TemperatureDto
 {

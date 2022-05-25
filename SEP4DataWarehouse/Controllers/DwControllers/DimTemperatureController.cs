@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using SEP4DataWarehouse.DTO.DwDTO;
 using SEP4DataWarehouse.Services.DwServices.Interfaces;
 using SEP4DataWarehouse.Utilities;
 
-namespace SEP4DataWarehouse.Controllers.DwControllers; 
+namespace SEP4DataWarehouse.Controllers.DwControllers;
 
 [Route("api/[controller]")]
-
 public class DimTemperatureController : ControllerBase {
     private readonly IDimTemperature _dimTemperatureService;
     private readonly IExceptionUtilityService _exceptionUtility;
@@ -15,18 +15,26 @@ public class DimTemperatureController : ControllerBase {
         _dimTemperatureService = dimTemperatureService;
         _exceptionUtility = exceptionUtility;
     }
-    
+
     [HttpGet]
-    public async Task<ActionResult<float>> GetTemperatureAverage(string boardId, DateTime timeFrom, DateTime timeTo)
-    {
-        try
-        {
+    public async Task<ActionResult<float>> GetTemperatureAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
+        try {
             var temperatureAverage = await _dimTemperatureService.GetTemperatureAverage(boardId, timeFrom, timeTo);
             return Ok(temperatureAverage);
-
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
+            return _exceptionUtility.HandleException(e);
+        }
+    }
+    
+    [HttpGet("/TemperatureEventValues")]
+    public async Task<ActionResult<List<DimReadingDto>>> GetEventValues(string boardId, DateTime timeFrom,
+        DateTime timeTo) {
+        try {
+            var eventValues = await _dimTemperatureService.GetEvents(boardId, timeFrom, timeTo);
+            return Ok(eventValues);
+        }
+        catch (Exception e) {
             return _exceptionUtility.HandleException(e);
         }
     }
