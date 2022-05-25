@@ -3,7 +3,7 @@ using SEP4DataWarehouse.Services.DwServices.Interfaces;
 using SEP4DataWarehouse.Utilities;
 
 namespace SEP4DataWarehouse.Controllers.DwControllers; 
-
+[Route("api/[controller]")]
 public class DimCarbonDioxideController : ControllerBase{
     private readonly IDimCarbonDioxide _dimCarbonDioxideService;
     private readonly IExceptionUtilityService _exceptionUtility;

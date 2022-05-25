@@ -40,7 +40,9 @@ var builder = WebApplication.CreateBuilder(args);
 
     //Adding the service classes for DataWarehouse
     builder.Services.AddScoped<IDimHumidity, DimHumidityService>();
-builder.Services.AddScoped<IDimCarbonDioxide, DimCarbonDioxideService>();
+    builder.Services.AddScoped<IDimCarbonDioxide, DimCarbonDioxideService>();
+    builder.Services.AddScoped<IDimTemperature, DimTemperatureService>();
+    builder.Services.AddScoped<IDimLight, DimLightService>();
     
 
     builder.Services.AddScoped<CheckForValues>();

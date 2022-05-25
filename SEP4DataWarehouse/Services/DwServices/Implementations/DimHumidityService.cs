@@ -38,7 +38,11 @@ public class DimHumidityService : IDimHumidity {
                 ).Where(h => h.dateTime >= from && h.dateTime <= to
                 ).Where(b => b.BoardId.Equals(boardId)).Average(h=> h.Humidityvalue);
             
-            return humidity ?? -999;
+            float? result = humidity.HasValue
+                ? (float?)Math.Round(humidity.Value, 3)
+                : null;
+            
+            return result ?? -999;
 
 
             /*var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));gi

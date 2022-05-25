@@ -1,45 +1,44 @@
 using SEP4DataWarehouse.Contexts.DwContext;
-using SEP4DataWarehouse.Services.DbServices;
 using SEP4DataWarehouse.Services.DwServices.Interfaces;
 
 namespace SEP4DataWarehouse.Services.DwServices.Implementations; 
 
-public class DimCarbonDioxideService : IDimCarbonDioxide {
+public class DimTemperatureService : IDimTemperature {
 
     private readonly GreenHouseDwContext _dwContext;
+    
 
-    public DimCarbonDioxideService(GreenHouseDwContext dwContext) {
+    public DimTemperatureService(GreenHouseDwContext dwContext) {
         _dwContext = dwContext;
     }
     
-    public async Task<float> GetCDAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
+    
+    public async Task<float> GetTemperatureAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         var from = Int32.Parse(timeFrom.ToString("yyyyMMdd"));
         var to = Int32.Parse(timeTo.ToString("yyyyMMdd"));
         
         try {
-            var carbonDioxide = (from cd in _dwContext.Dimcarbondioxides
+            var temperature = (from temp in _dwContext.Dimtemperatures
                     join factMeasure in _dwContext.Factmeasurements
-                        on cd.CdId equals factMeasure.CdId
+                        on temp.TId equals factMeasure.TId
                     join dimBoard in _dwContext.Dimboards
                         on  factMeasure.BId equals dimBoard.BId
-                    orderby cd.CdId
+                    orderby temp.TId
                     select new
                     {
-                        cd.CdId,
-                        measureDate = cd.MeasureDate, 
-                        factMeasure.Carbondioxidevalue,
+                        temp.TId,
+                        measureDate = temp.MeasureDate, 
+                        factMeasure.Temperaturevalue,
                         dimBoard.BoardId
                     }
-                ).Where(cd => cd.measureDate >= from && cd.measureDate <= to
-                ).Where(b => b.BoardId.Equals(boardId)).Average(cd=> cd.Carbondioxidevalue);
+                ).Where(temperature => temperature.measureDate >= from && temperature.measureDate <= to
+                ).Where(b => b.BoardId.Equals(boardId)).Average(temp=> temp.Temperaturevalue);
             
-            
-            float? result = carbonDioxide.HasValue
-                ? (float?)Math.Round(carbonDioxide.Value, 3)
+            float? result = temperature.HasValue
+                ? (float?)Math.Round(temperature.Value, 3)
                 : null;
             
             return result ?? -999;
-            
 
             
         }
