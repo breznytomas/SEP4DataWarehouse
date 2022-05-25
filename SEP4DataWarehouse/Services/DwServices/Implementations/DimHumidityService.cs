@@ -25,14 +25,18 @@ public class DimHumidityService : IDimHumidity {
             var humidity = (from hum in _Dwcontext.Dimhumidities
                     join factHum in _Dwcontext.Factmeasurements
                         on hum.HId equals factHum.HId
+                    join dimBoard in _Dwcontext.Dimboards
+                        on  factHum.BId equals dimBoard.BId
                     orderby hum.HId
                     select new
                     {
                         hum.HId,
                         dateTime = hum.MeasureDate, 
                         factHum.Humidityvalue,
+                        dimBoard.BoardId
                     }
-                ).Where(h => h.dateTime >= from && h.dateTime <= to).Average(h=> h.Humidityvalue);
+                ).Where(h => h.dateTime >= from && h.dateTime <= to
+                ).Where(b => b.BoardId.Equals(boardId)).Average(h=> h.Humidityvalue);
             
             return humidity ?? -999;
 
