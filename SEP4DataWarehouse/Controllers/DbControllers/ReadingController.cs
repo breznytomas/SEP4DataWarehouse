@@ -34,7 +34,7 @@ public class ReadingController : ControllerBase
 
     
     [HttpPost]
-    public async Task<ActionResult<BoardDto>> AddReading([FromBody] ReadingDto readingDto)
+    public async Task<ActionResult<int>> AddReading([FromBody] ReadingDto readingDto)
     {
         if (!ModelState.IsValid)
         {
@@ -43,14 +43,15 @@ public class ReadingController : ControllerBase
             
         try
         {
-            await _checkForValues.CheckForDeviations(readingDto);
+            // for sending back how much should the window be open, depending on if any value went over the trigger limit
+            var tempDeviationDegree = await _checkForValues.CheckForDeviations(readingDto);
             //TODO by tomas this is the version for skeleton, insert call to logic here to verity if measurements are out of bounds
             await _temperatureService.AddTemperatureAsync(readingDto.BoardId, readingDto.TemperatureList);
             await _lightService.AddLightAsync(readingDto.BoardId, readingDto.LightLists);
             await _humidityService.AddHumidityAsync(readingDto.BoardId, readingDto.HumidityList);
             await _carbonDioxideService.AddCarboDioxideAsync(readingDto.BoardId, readingDto.CarbonDioxideList);
             await _readingService.AddReading(readingDto);
-            return Ok("Added successfully");
+            return Ok(tempDeviationDegree);
 
 
         }

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using DotLiquid.Tags;
 using Microsoft.EntityFrameworkCore;
 using SEP4DataWarehouse.Contexts.DbContext;
 using SEP4DataWarehouse.DTO.DbDTO;
@@ -16,10 +17,9 @@ public class CheckForValues
     {
         _context = context;
     }
+    
 
-
-    // First version of the method
-    /*public async Task CheckForDeviations2(ReadingDto reading)
+    public async Task<int> CheckForDeviations(ReadingDto reading)
     {
         var board = _context.Boards.Include(b => b.EventList).ThenInclude(e => e.TriggerList)
             .First(b => b.Id.Equals(reading.BoardId));
@@ -30,153 +30,30 @@ public class CheckForValues
         Event? CO2Event = board.EventList.FirstOrDefault(e => e.EventTypes.Equals(EventTypes.CarbonDioxide));
         Event? lightEvent = board.EventList.FirstOrDefault(e => e.EventTypes.Equals(EventTypes.Light));
 
-
-
-        //for loop for humidity
-        if (humidityEvent != null)
-        {
-            foreach (var humidity in reading.HumidityList)
-            {
-                if (humidity.Value > humidityEvent.Top)
-                {
-                    humidityEvent.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = humidity.Timestamp,
-                        IsTop = true,
-                        TriggerValue = humidity.Value,
-                        LimitValue = humidityEvent.Top
-                    });
-                }
-
-                else if (humidity.Value < humidityEvent.Bottom)
-                {
-                    humidityEvent.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = humidity.Timestamp,
-                        IsTop = false,
-                        TriggerValue = humidity.Value,
-                        LimitValue = humidityEvent.Bottom
-                    });
-                }
-            }
-        }
-
-        if (temperatureEvent != null)
-        {
-            foreach (var temperature in reading.TemperatureList)
-            {
-                if (temperature.Value > temperatureEvent.Top)
-                {
-                    temperatureEvent.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = temperature.Timestamp,
-                        IsTop = true,
-                        TriggerValue = temperature.Value,
-                        LimitValue = temperatureEvent.Top
-                    });
-                }
-
-                else if (temperature.Value < temperatureEvent.Bottom)
-                {
-                    temperatureEvent.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = temperature.Timestamp,
-                        IsTop = false,
-                        TriggerValue = temperature.Value,
-                        LimitValue = temperatureEvent.Bottom
-                    });
-                }
-            }
-        }
-
-        if (CO2Event != null)
-        {
-            foreach (var co2 in reading.CarbonDioxideList)
-            {
-                if (co2.Value > CO2Event.Top)
-                {
-                    CO2Event.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = co2.Timestamp,
-                        IsTop = true,
-                        TriggerValue = co2.Value,
-                        LimitValue = CO2Event.Top
-                    });
-                }
-
-                else if (co2.Value < CO2Event.Bottom)
-                {
-                    CO2Event.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = co2.Timestamp,
-                        IsTop = false,
-                        TriggerValue = co2.Value,
-                        LimitValue = CO2Event.Bottom
-                    });
-                }
-            }
-        }
-
-        if (lightEvent != null)
-        {
-            foreach (var light in reading.LightLists)
-            {
-                if (light.Value > lightEvent.Top)
-                {
-                    lightEvent.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = light.Timestamp,
-                        IsTop = true,
-                        TriggerValue = light.Value,
-                        LimitValue = lightEvent.Top
-                    });
-                }
-
-                else if (light.Value < lightEvent.Bottom)
-                {
-                    lightEvent.TriggerList.Add(new Trigger()
-                    {
-                        Timestamp = light.Timestamp,
-                        IsTop = false,
-                        TriggerValue = light.Value,
-                        LimitValue = lightEvent.Bottom
-                    });
-                }
-            }
-        }
-
-        await _context.SaveChangesAsync();
-    }*/
-
-    public async Task CheckForDeviations(ReadingDto reading)
-    {
-        var board = _context.Boards.Include(b => b.EventList).ThenInclude(e => e.TriggerList)
-            .First(b => b.Id.Equals(reading.BoardId));
-
-
-        Event? humidityEvent = board.EventList.FirstOrDefault(e => e.EventTypes == EventTypes.Humidity);
-        Event? temperatureEvent = board.EventList.FirstOrDefault(e => e.EventTypes.Equals(EventTypes.Temperature));
-        Event? CO2Event = board.EventList.FirstOrDefault(e => e.EventTypes.Equals(EventTypes.CarbonDioxide));
-        Event? lightEvent = board.EventList.FirstOrDefault(e => e.EventTypes.Equals(EventTypes.Light));
-
-        var jsonHumidity = JsonSerializer.Serialize(humidityEvent);
-        var jsonTemp = JsonSerializer.Serialize(humidityEvent);
-        var jsonCo2 = JsonSerializer.Serialize(humidityEvent);
-        var jsonLight = JsonSerializer.Serialize(humidityEvent);
-        
-        
         if (humidityEvent != null)
             foreach (var trigger in GetHumidityTriggers(reading, humidityEvent))
             {
                 humidityEvent.TriggerList.Add(trigger);
             }
 
+        float maxTempValue = 0;
+        float tempLimitValue = 0;
         if (temperatureEvent != null)
             foreach (var trigger in GetTemperatureTriggers(reading, temperatureEvent))
             {
                 temperatureEvent.TriggerList.Add(trigger);
+
+                if (trigger.IsTop)
+                {
+                    if (trigger.TriggerValue > maxTempValue)
+                    {
+                        maxTempValue = trigger.TriggerValue;
+                        tempLimitValue = trigger.LimitValue;
+                    }
+                }
             }
         
+
         if (CO2Event != null)
             foreach (var trigger in GetCo2Triggers(reading, CO2Event))
             {
@@ -190,9 +67,36 @@ public class CheckForValues
             }
 
         await _context.SaveChangesAsync();
+
+        // for sending back how much should the window be open
+        return GetDeviationDegree(maxTempValue, tempLimitValue);
     }
-    
-    
+
+    public static int GetDeviationDegree(float maxTempValue, float tempLimitValue)
+    {
+        // generate a number 0-200
+        // 0 for no deviation - window closed
+        // 200 for 20degrees over or more - window fully open
+        var deviationPoints = 0; 
+        
+        if (maxTempValue > 0)
+        {
+            var tempDeviation = (int)Math.Ceiling(maxTempValue - tempLimitValue);
+
+            if (tempDeviation > 20)
+                deviationPoints = 200;
+             
+            else
+                deviationPoints = tempDeviation * 10;     
+             
+        }
+        
+        // subtract 100 from the number
+        // get a number within the desired range (-100 to 100)
+        return deviationPoints - 100;
+    }
+
+
     public static ICollection<Trigger> GetHumidityTriggers(ReadingDto reading, Event humidityEvent)
     {
         ICollection<Trigger> triggers = new List<Trigger>();
