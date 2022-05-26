@@ -66,7 +66,6 @@ public class CheckForValuesTest
         }
     }
 
-
     [Fact]
     public void CreateLowTriggersTest()
     {
@@ -202,7 +201,7 @@ public class CheckForValuesTest
     
 
     [Fact]
-    public void CreatePlus25Deviation()
+    public void Create25PercentDeviation()
     {
         // prepare inputs
         // var reading = LoadReadingFromJson("readingInputHigh.json");
@@ -215,17 +214,23 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 105
+                    Value = 62.5F
                 }
             }
         };
 
-
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
-
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
+        
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
-
 
         float maxTempValue = 0;
         float tempLimitValue = 0;
@@ -264,13 +269,20 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 100
+                    Value = 60
                 }
             }
         };
 
-
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
 
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
@@ -313,13 +325,20 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 95
+                    Value = 57.5F
                 }
             }
         };
 
-        // event has its top trigger value 80 
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
 
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
@@ -362,13 +381,21 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 90
+                    Value = 55
                 }
             }
         };
 
 
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
 
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
@@ -411,13 +438,21 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 85
+                    Value = 52.5F
                 }
             }
         };
 
 
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
 
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
@@ -460,13 +495,21 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 80.5F
+                    Value = 50.5F
                 }
             }
         };
 
 
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
 
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);
@@ -509,7 +552,7 @@ public class CheckForValuesTest
                 {
                     Id = 0,
                     Timestamp = 1652995127,
-                    Value = 80
+                    Value = 50
                 },
                 new Temperature()
                 {
@@ -521,7 +564,15 @@ public class CheckForValuesTest
         };
 
 
-        var temperatureEvent = LoadEventFromJson("temperatureEvent.json");
+        var temperatureEvent = new Event()
+        {
+            Id = 12,
+            Name = "TemperatureEvent",
+            EventTypes = 0,
+            Top = 50,
+            Bottom = 10,
+            TriggerList = new List<Trigger>()
+        };
 
         // get values
         var temperatureTriggers = CheckForValues.GetTemperatureTriggers(reading, temperatureEvent);

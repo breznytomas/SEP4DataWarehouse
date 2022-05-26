@@ -76,18 +76,20 @@ public class CheckForValues
     {
         // generate a number 0-200
         // 0 for no deviation - window closed
-        // 200 for 20degrees over or more - window fully open
+        // 200 for 20% over or more - window fully open
         var deviationPoints = 0; 
         
         if (maxTempValue > 0)
         {
-            var tempDeviation = (int)Math.Ceiling(maxTempValue - tempLimitValue);
-
-            if (tempDeviation > 20)
+            var tempDeviation = (maxTempValue - tempLimitValue);
+            var percentualDeviation = (int) (tempDeviation / tempLimitValue * 100);
+            
+            
+            if (percentualDeviation > 20)
                 deviationPoints = 200;
              
             else
-                deviationPoints = tempDeviation * 10;     
+                deviationPoints = percentualDeviation * 10;     
              
         }
         
