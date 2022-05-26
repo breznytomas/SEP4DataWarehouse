@@ -38,4 +38,17 @@ public class DimTemperatureController : ControllerBase {
             return _exceptionUtility.HandleException(e);
         }
     }
+
+    [HttpGet("/TemperatureTriggerRatio")]
+
+    public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+        try {
+            var ratio = await _dimTemperatureService.GetTriggerRatio(boardId, timeFrom, timeTo);
+            return Ok(ratio);
+        }
+        catch (Exception e) {
+            return _exceptionUtility.HandleException(e);
+        }
+    }
+
 }

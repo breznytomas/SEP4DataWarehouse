@@ -38,4 +38,16 @@ public class DimLightController : ControllerBase {
             return _exceptionUtility.HandleException(e);
         }
     }
+    
+    [HttpGet("/LightTriggerRatio")]
+
+    public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+        try {
+            var ratio = await _DimLightService.GetTriggerRatio(boardId, timeFrom, timeTo);
+            return Ok(ratio);
+        }
+        catch (Exception e) {
+            return _exceptionUtility.HandleException(e);
+        }
+    }
 }

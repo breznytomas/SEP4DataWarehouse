@@ -37,4 +37,16 @@ public class DimCarbonDioxideController : ControllerBase {
             return _exceptionUtility.HandleException(e);
         }
     }
+    
+    [HttpGet("/CarbonDioxideTriggerRatio")]
+
+    public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+        try {
+            var ratio = await _dimCarbonDioxideService.GetTriggerRatio(boardId, timeFrom, timeTo);
+            return Ok(ratio);
+        }
+        catch (Exception e) {
+            return _exceptionUtility.HandleException(e);
+        }
+    }
 }

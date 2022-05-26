@@ -104,4 +104,56 @@ public class DimCarbonDioxideService : IDimCarbonDioxide {
             throw new Exception();
         }
     }
+
+    public async Task<float> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+    var from = Int32.Parse(timeFrom.ToString("yyyyMMdd"));
+        var to = Int32.Parse(timeTo.ToString("yyyyMMdd"));
+
+        try {
+            var carbonDioxideTriggered = (from cd in _dwContext.Dimcarbondioxides
+                    join factMeasure in _dwContext.Factmeasurements
+                        on cd.CdId equals factMeasure.CdId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby cd.CdId
+                    select new
+                    {
+                        cdId = cd.CdId,
+                        measureDate = cd.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Carbondioxidevalue,
+                        wasTriggered = cd.Wastriggered
+                    }
+                ).Where(cd => cd.measureDate >= from && cd.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(cd => cd.wasTriggered.Equals("True"));
+            
+            var carbonDioxideTotal = (from cd in _dwContext.Dimcarbondioxides
+                    join factMeasure in _dwContext.Factmeasurements
+                        on cd.CdId equals factMeasure.CdId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby cd.CdId
+                    select new
+                    {
+                        cdId = cd.CdId,
+                        measureDate = cd.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Carbondioxidevalue,
+                        wasTriggered = cd.Wastriggered
+                    }
+                ).Where(cd => cd.measureDate >= from && cd.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(cd => cd.wasTriggered.Equals("True") || cd.wasTriggered.Equals("False"));
+
+            var result = (float)carbonDioxideTriggered / carbonDioxideTotal * 100;
+          
+
+            return result;
+
+        }
+        catch (Exception e) {
+            Console.WriteLine(e);
+            throw new Exception();
+        }    }
 }

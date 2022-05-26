@@ -7,4 +7,5 @@ public class DimReadingDto {
     public float Value { get; set; }
     public string TriggeredFrom { get; set; }
     public float ExceededBy { get; set; }
+    
 }

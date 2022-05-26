@@ -6,4 +6,6 @@ public interface IDimLight {
     Task<float> GetLightAverage(string boardId, DateTime timeFrom, DateTime timeTo);
     Task<List<DimReadingDto>> GetEvents(string boardId, DateTime timeFrom, DateTime timeTo);
 
+    Task<float> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo);
+
 }

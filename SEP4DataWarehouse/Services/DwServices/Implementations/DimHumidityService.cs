@@ -108,4 +108,56 @@ public class DimHumidityService : IDimHumidity {
             throw new Exception();
         }
     }
+
+    public async Task<float> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+   var from = Int32.Parse(timeFrom.ToString("yyyyMMdd"));
+        var to = Int32.Parse(timeTo.ToString("yyyyMMdd"));
+
+        try {
+            var humidityTriggered = (from hum in _dwContext.Dimhumidities
+                    join factMeasure in _dwContext.Factmeasurements
+                        on hum.HId equals factMeasure.HId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby hum.HId
+                    select new
+                    {
+                        hId = hum.HId,
+                        measureDate = hum.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Humidityvalue,
+                        wasTriggered = hum.Wastriggered
+                    }
+                ).Where(hum => hum.measureDate >= from && hum.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(hum => hum.wasTriggered.Equals("True"));
+            
+            var humidityTotal = (from hum in _dwContext.Dimhumidities
+                    join factMeasure in _dwContext.Factmeasurements
+                        on hum.HId equals factMeasure.HId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby hum.HId
+                    select new
+                    {
+                        hId = hum.HId,
+                        measureDate = hum.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Humidityvalue,
+                        wasTriggered = hum.Wastriggered
+                    }
+                ).Where(hum => hum.measureDate >= from && hum.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(hum => hum.wasTriggered.Equals("True")|| hum.wasTriggered.Equals("False"));
+
+            var result = (float)humidityTriggered / humidityTotal * 100;
+           
+
+            return result;
+
+        }
+        catch (Exception e) {
+            Console.WriteLine(e);
+            throw new Exception();
+        }    }
 }

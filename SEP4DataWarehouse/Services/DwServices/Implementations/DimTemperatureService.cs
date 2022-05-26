@@ -100,4 +100,60 @@ public class DimTemperatureService : IDimTemperature {
         }
     }
     
+     public async Task<float> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+        var from = Int32.Parse(timeFrom.ToString("yyyyMMdd"));
+        var to = Int32.Parse(timeTo.ToString("yyyyMMdd"));
+
+        try {
+            var temperatureTriggered = (from temp in _dwContext.Dimtemperatures
+                    join factMeasure in _dwContext.Factmeasurements
+                        on temp.TId equals factMeasure.CdId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby temp.TId
+                    select new
+                    {
+                        tempId = temp.TId,
+                        measureDate = temp.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Temperaturevalue,
+                        wasTriggered = temp.Wastriggered,
+                       
+                    }
+                ).Where(temp => temp.measureDate >= from && temp.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(temp => temp.wasTriggered.Equals("True"));
+            
+            var temperatureTotal = (from temp in _dwContext.Dimtemperatures
+                    join factMeasure in _dwContext.Factmeasurements
+                        on temp.TId equals factMeasure.CdId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby temp.TId
+                    select new
+                    {
+                        tempId = temp.TId,
+                        measureDate = temp.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Temperaturevalue,
+                        wasTriggered = temp.Wastriggered,
+                       
+                    }
+                ).Where(temp => temp.measureDate >= from && temp.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(temp => temp.wasTriggered.Equals("True") || temp.wasTriggered.Equals("False"));
+
+            var result = (float)temperatureTriggered / (float)temperatureTotal * 100;
+            
+
+            return result;
+
+        }
+        catch (Exception e) {
+            Console.WriteLine(e);
+            throw new Exception();
+        }
+    }
+    
+    
 }

@@ -101,5 +101,56 @@ public class DimLightService : IDimLight {
             throw new Exception();
         }
     }
-    
+
+    public async Task<float> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
+        var from = Int32.Parse(timeFrom.ToString("yyyyMMdd"));
+        var to = Int32.Parse(timeTo.ToString("yyyyMMdd"));
+
+        try {
+            var lightTriggered = (from li in _dwContext.Dimlights
+                    join factMeasure in _dwContext.Factmeasurements
+                        on li.LId equals factMeasure.CdId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby li.LId
+                    select new
+                    {
+                        liId = li.LId,
+                        measureDate = li.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Lightvalue,
+                        wasTriggered = li.Wastriggered
+                    }
+                ).Where(li => li.measureDate >= from && li.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(li => li.wasTriggered.Equals("True"));
+            
+            var lightTotal = (from li in _dwContext.Dimlights
+                    join factMeasure in _dwContext.Factmeasurements
+                        on li.LId equals factMeasure.CdId
+                    join dimBoard in _dwContext.Dimboards
+                        on factMeasure.BId equals dimBoard.BId
+                    orderby li.LId
+                    select new
+                    {
+                        liId = li.LId,
+                        measureDate = li.MeasureDate,
+                        boardId = dimBoard.BoardId,
+                        value = factMeasure.Lightvalue,
+                        wasTriggered = li.Wastriggered
+                    }
+                ).Where(li => li.measureDate >= from && li.measureDate <= to
+                ).Where(b => b.boardId.Equals(boardId)
+                ).Count(li => li.wasTriggered.Equals("True") || li.wasTriggered.Equals("False"));
+
+            var result = (float)lightTriggered / lightTotal * 100;
+          
+            return result;
+
+        }
+        catch (Exception e) {
+            Console.WriteLine(e);
+            throw new Exception();
+        }
+    }
 }

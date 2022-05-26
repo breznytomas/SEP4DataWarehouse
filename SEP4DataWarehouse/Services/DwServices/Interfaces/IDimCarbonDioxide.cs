@@ -6,4 +6,6 @@ namespace SEP4DataWarehouse.Services.DwServices.Interfaces;
 public interface IDimCarbonDioxide {
     Task<float> GetCDAverage(string boardId, DateTime timeFrom, DateTime timeTo);
     Task<List<DimReadingDto>> GetEvents(string boardId, DateTime timeFrom, DateTime timeTo);
+    Task<float> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo);
+
 }
