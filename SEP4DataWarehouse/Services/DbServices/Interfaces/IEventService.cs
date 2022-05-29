@@ -12,6 +12,6 @@ public interface IEventService
     
     //Task<IList<Event>> GetEventsByUserId(string email);
     Task AddEventToBoard(EventDto eventDto, string boardId);
-    Task UpdateEvent(string boardId, EventDto eventDto);
+    Task UpdateEvent(string boardId, Event eventReceived);
     Task DeleteEventFromBoard(string boardId, long eventId);
 }

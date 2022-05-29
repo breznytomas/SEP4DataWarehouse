@@ -5,6 +5,8 @@ namespace SEP4DataWarehouse.DTO.DbDTO;
 
 public class TemperatureDto
 {
+    
+    //todo by tomas if no usages delete this class
     [Required, Key]
     [JsonPropertyName("Id")]
     public long Id { get; set; }
