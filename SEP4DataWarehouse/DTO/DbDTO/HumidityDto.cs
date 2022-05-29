@@ -5,6 +5,8 @@ namespace SEP4DataWarehouse.DTO.DbDTO;
 
 public class HumidityDto
 {
+    //todo by tomas if no usages delete
+    
     [Required, Key]
     [JsonPropertyName("Id")]
     public long Id { get; set; }

@@ -42,8 +42,8 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
-    
-    
+
+
     [Route("Login")]
     [HttpPost]
     public async Task<ActionResult<User>> LoginUser([FromBody] UserDto userDTO)
@@ -55,8 +55,7 @@ public class UserController : ControllerBase
 
         try
         {
-            
-           var user = await _userService.LoginUser(userDTO.Email , userDTO.Password);
+            var user = await _userService.LoginUser(userDTO.Email, userDTO.Password);
             return Ok(user);
         }
         catch (Exception e)
@@ -64,5 +63,57 @@ public class UserController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
+
+
+
     }
+
+
+    [HttpPut]
+    public async Task<ActionResult<User>> ChangePassword([FromBody] UserDto userDTO, string newPassword)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+
+
+            await _userService.ChangePassword(userDTO.Email, userDTO.Password, newPassword);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+
+
+
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<User>> DeleteUser([FromBody] UserDto userDTO)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            await _userService.RemoveUser(userDTO.Email, userDTO.Password);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+
+
+    }
+
 }

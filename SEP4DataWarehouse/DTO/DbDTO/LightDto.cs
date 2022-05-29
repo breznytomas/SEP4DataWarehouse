@@ -5,6 +5,8 @@ namespace SEP4DataWarehouse.DTO.DbDTO;
 
 public class LightDto
 {
+    
+    //todo by tomas if no usages of this class delete
     [Required, Key]
     [JsonPropertyName("Id")]
     public long Id { get; set; }

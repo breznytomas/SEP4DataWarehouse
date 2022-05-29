@@ -71,7 +71,7 @@ public class EventController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<Event>> UpdateEvent(string boardId, [FromBody] EventDto updateEvent)
+    public async Task<ActionResult<Event>> UpdateEvent(string boardId, [FromBody] Event updateEvent)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

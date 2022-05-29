@@ -7,7 +7,7 @@ public interface IUserService
     Task<User> LoginUser(string email, string password);
     Task AddUser<User>(User user);
     
-    Task RemoveUser(string userEmail);
+    Task RemoveUser(string userEmail ,string password);
 
     Task ChangePassword(string email, string oldPassword, string newPassword);
 }
