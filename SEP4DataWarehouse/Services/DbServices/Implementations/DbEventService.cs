@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SEP4DataWarehouse.Contexts.DbContext;
 using SEP4DataWarehouse.DTO.DbDTO;
@@ -28,19 +29,37 @@ public class DbEventService : IEventService
 
     public async Task AddEventToBoard(EventDto eventDto, string boardId)
     {
-        var board = await _context.Boards.Include(b => b.EventList).FirstAsync(b => b.Id.Equals(boardId));
-
-        Event newEvent = new Event()
+        try
         {
-            Name = eventDto.Name,
-            Bottom = eventDto.Bottom,
-            Top = eventDto.Top,
-            EventTypes = eventDto.EventTypes
-            
-        };
+            var board = await _context.Boards.Include(b => b.EventList).FirstAsync(b => b.Id.Equals(boardId));
 
-        board.EventList.Add(newEvent);
-        await _context.SaveChangesAsync();
+      
+            foreach (var theEvent in board.EventList)
+            {
+                if (theEvent.EventTypes==eventDto.EventTypes)
+                {
+                    throw new Exception("This event type already exists for this board");
+                }
+            }
+
+            Event newEvent = new Event()
+            {
+                Name = eventDto.Name,
+                Bottom = eventDto.Bottom,
+                Top = eventDto.Top,
+                EventTypes = eventDto.EventTypes
+            
+            };
+
+            board.EventList.Add(newEvent);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+
+            throw new Exception(e.Message);
+        }
+       
     }
 
     public async Task UpdateEvent(string boardId, Event eventReceived)
@@ -60,17 +79,12 @@ public class DbEventService : IEventService
 
     public async Task DeleteEventFromBoard( string boardId, long eventId)
     {
-        var board = await _context.Boards.Include(b => b.EventList).FirstAsync(b => b.Id.Equals(boardId));
-
-       
+        var board = await _context.Boards.Include(b => b.EventList).ThenInclude(e=>e.TriggerList).FirstAsync(b => b.Id.Equals(boardId));
         
-            var event1 = board.EventList.First(e => e.Id == eventId);
+        var event1 = board.EventList.First(e => e.Id == eventId);
         
-
-        if (board.EventList != null)
-        {
-            _context.Events.Remove(event1);
-        }
+        if (board.EventList != null )    _context.Events.Remove(event1);
+        if (event1.TriggerList!= null)   _context.Triggers.RemoveRange(event1.TriggerList);
         
         await _context.SaveChangesAsync();
     }

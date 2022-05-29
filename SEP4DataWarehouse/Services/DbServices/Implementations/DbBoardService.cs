@@ -42,7 +42,30 @@ public class DbBoardService : IBoardService
 
     public async Task DeleteBoard(string boardId)
     {
-        var boardToDelete = _context.Boards.Include(b => b.HumidityList).FirstOrDefault(board => board.Id.Equals(boardId));
+        var boardToDelete = _context.Boards.Include(b => b.HumidityList).Include(e=>e.EventList)
+            .Include(t=>t.TemperatureList).Include(c=>c.CarbonDioxideList).Include(l=>l.LightLists).Include(u=>u.UserList)
+            .First(board => board.Id.Equals(boardId));
+
+        if (boardToDelete.EventList != null)
+        {
+            foreach (var theEvent in boardToDelete.EventList)
+            {
+                if (theEvent.TriggerList!=null)
+                {
+                    _context.Triggers.RemoveRange(theEvent.TriggerList);
+                }
+               
+            }
+
+            _context.Events.RemoveRange(boardToDelete.EventList);
+        }
+
+        if (boardToDelete.HumidityList != null) _context.HumiditySet.RemoveRange(boardToDelete.HumidityList);
+        if (boardToDelete.TemperatureList != null) _context.TemperatureSet.RemoveRange(boardToDelete.TemperatureList);
+        if (boardToDelete.CarbonDioxideList != null)
+            _context.CarbonDioxideSet.RemoveRange(boardToDelete.CarbonDioxideList);
+        if (boardToDelete.LightLists != null) _context.LightSet.RemoveRange(boardToDelete.LightLists);
+
         _context.Boards.Remove(boardToDelete);
         await _context.SaveChangesAsync();
     }
