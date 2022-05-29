@@ -16,7 +16,7 @@ public class DimCarbonDioxideController : ControllerBase {
     }
 
 
-    [HttpGet]
+    [HttpGet("/api/CarbonDioxide/Dim")]
     public async Task<ActionResult<float>> GetCdAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var cdAverageValue = await _dimCarbonDioxideService.GetCDAverage(boardId, timeFrom, timeTo);
@@ -27,7 +27,7 @@ public class DimCarbonDioxideController : ControllerBase {
         }
     }
 
-    [HttpGet("/CarbonDioxideEventValues")]
+    [HttpGet("/api/CarbonDioxide/EventValues")]
     public async Task<ActionResult<List<DimReadingDto>>> GetEventValues(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var eventValues = await _dimCarbonDioxideService.GetEvents(boardId, timeFrom, timeTo);
@@ -38,7 +38,7 @@ public class DimCarbonDioxideController : ControllerBase {
         }
     }
     
-    [HttpGet("/CarbonDioxideTriggerRatio")]
+    [HttpGet("/api/CarbonDioxide/TriggerRatio")]
 
     public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
