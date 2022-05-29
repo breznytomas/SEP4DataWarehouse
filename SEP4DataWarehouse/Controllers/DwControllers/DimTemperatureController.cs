@@ -16,7 +16,7 @@ public class DimTemperatureController : ControllerBase {
         _exceptionUtility = exceptionUtility;
     }
 
-    [HttpGet("api/Temperature/Dim")]
+    [HttpGet("/api/Temperature/Dim")]
     public async Task<ActionResult<float>> GetTemperatureAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var temperatureAverage = await _dimTemperatureService.GetTemperatureAverage(boardId, timeFrom, timeTo);
