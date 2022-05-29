@@ -16,7 +16,7 @@ public class DimTemperatureController : ControllerBase {
         _exceptionUtility = exceptionUtility;
     }
 
-    [HttpGet]
+    [HttpGet("/Temperature/Dim")]
     public async Task<ActionResult<float>> GetTemperatureAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var temperatureAverage = await _dimTemperatureService.GetTemperatureAverage(boardId, timeFrom, timeTo);
@@ -27,7 +27,7 @@ public class DimTemperatureController : ControllerBase {
         }
     }
     
-    [HttpGet("/TemperatureEventValues")]
+    [HttpGet("/api/Temperature/EventValues")]
     public async Task<ActionResult<List<DimReadingDto>>> GetEventValues(string boardId, DateTime timeFrom,
         DateTime timeTo) {
         try {
@@ -39,7 +39,7 @@ public class DimTemperatureController : ControllerBase {
         }
     }
 
-    [HttpGet("/TemperatureTriggerRatio")]
+    [HttpGet("/api/Temperature/TriggerRatio")]
 
     public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {

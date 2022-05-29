@@ -15,8 +15,7 @@ public class DimLightController : ControllerBase {
         _exceptionUtility = exceptionUtility;
     }
 
-
-    [HttpGet]
+    [HttpGet("/api/Light/Dim")]
     public async Task<ActionResult<float>> GetLightAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var lightAverage = await _DimLightService.GetLightAverage(boardId, timeFrom, timeTo);
@@ -27,7 +26,7 @@ public class DimLightController : ControllerBase {
         }
     }
     
-    [HttpGet("/LightEventValues")]
+    [HttpGet("/api/Light/EventValues")]
     public async Task<ActionResult<List<DimReadingDto>>> GetEventValues(string boardId, DateTime timeFrom,
         DateTime timeTo) {
         try {
@@ -39,7 +38,7 @@ public class DimLightController : ControllerBase {
         }
     }
     
-    [HttpGet("/LightTriggerRatio")]
+    [HttpGet("/api/Light/TriggerRatio")]
 
     public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {

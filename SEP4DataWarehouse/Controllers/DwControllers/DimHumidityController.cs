@@ -16,8 +16,7 @@ public class DimHumidityController : ControllerBase {
         this._exceptionUtility = exceptionUtility;
     }
 
-
-    [HttpGet]
+    [HttpGet("/api/Humidity/Dim")]
     public async Task<ActionResult<float>> GetHumidityAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var humAverageValue = await _dimHumidityService.GetHumidityAverage(boardId, timeFrom, timeTo);
@@ -30,7 +29,7 @@ public class DimHumidityController : ControllerBase {
 
   
 
-    [HttpGet("/HumidityEventValues")]
+    [HttpGet("/api/Humidity/EventValues")]
     public async Task<ActionResult<List<DimReadingDto>>> GetEventValues(string boardId, DateTime timeFrom,
         DateTime timeTo) {
         try {
@@ -42,7 +41,7 @@ public class DimHumidityController : ControllerBase {
         }
     }
     
-    [HttpGet("/HumidityTriggerRatio")]
+    [HttpGet("/api/Humidity/TriggerRatio")]
 
     public async Task<ActionResult<float>> GetTriggerRatio(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
