@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SEP4DataWarehouse.DTO.DbDTO;
 using SEP4DataWarehouse.Models.DbModels;
 using SEP4DataWarehouse.Services.DbServices;
+using SEP4DataWarehouse.Utilities;
 
 namespace SEP4DataWarehouse.Controllers.DbControllers;
 
@@ -11,10 +12,12 @@ namespace SEP4DataWarehouse.Controllers.DbControllers;
 public class UserController : ControllerBase
 {
     private IUserService _userService;
+    private IExceptionUtilityService _exceptionUtility;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IExceptionUtilityService exceptionUtility)
     {
         _userService = userService;
+        _exceptionUtility = exceptionUtility;
     }
 
 
@@ -38,8 +41,7 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
+            return _exceptionUtility.HandleException(e);
         }
     }
 
@@ -60,12 +62,8 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
+            return _exceptionUtility.HandleException(e);
         }
-
-
-
     }
 
 
@@ -86,12 +84,8 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
+            return _exceptionUtility.HandleException(e);
         }
-
-
-
     }
 
     [HttpDelete]
@@ -109,11 +103,8 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return StatusCode(500, e.Message);
+            return _exceptionUtility.HandleException(e);
         }
-
-
     }
 
 }

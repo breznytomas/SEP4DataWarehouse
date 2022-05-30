@@ -21,8 +21,6 @@ public class BoardController : ControllerBase
         this.exceptionUtility = exceptionUtility;
     }
 
-
-
     
     [HttpPut]
     public async Task<ActionResult> AttachBoardToUser(string boardId, string userEmail)
@@ -48,8 +46,7 @@ public class BoardController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return exceptionUtility.HandleException(e);
         }
     }
 
