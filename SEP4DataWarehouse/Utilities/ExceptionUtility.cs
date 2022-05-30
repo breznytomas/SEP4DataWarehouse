@@ -1,3 +1,4 @@
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SEP4DataWarehouse.Utilities;
@@ -10,7 +11,23 @@ public class ExceptionUtility : ControllerBase, IExceptionUtilityService
  */
     public ActionResult HandleException(Exception e)
     {
+
         Console.WriteLine(e);
+        
+        if (e.GetType() == typeof(KeyNotFoundException))
+        {
+           
+            return StatusCode(404, e.Message);
+        }
+
+        if (e.GetType() == typeof(ConstraintException))
+        {
+            return StatusCode(409, e.Message);
+        }
+      
+        
         return StatusCode(500, e.Message);
+        
+        
     }
 }

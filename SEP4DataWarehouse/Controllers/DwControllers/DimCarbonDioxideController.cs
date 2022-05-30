@@ -16,7 +16,7 @@ public class DimCarbonDioxideController : ControllerBase {
     }
 
 
-    [HttpGet("/api/CarbonDioxide/Dim")]
+    [HttpGet("/api/CarbonDioxide/Average")]
     public async Task<ActionResult<float>> GetCdAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var cdAverageValue = await _dimCarbonDioxideService.GetCDAverage(boardId, timeFrom, timeTo);

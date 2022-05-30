@@ -21,14 +21,13 @@ public class DbCarbonDioxideService: ICarbonDioxideService
         try
         {
             var board = await _context.Boards.Include(b =>b.CarbonDioxideList ).FirstAsync(board => board.Id == boardId);
-            //todo by tomas null pointer possible reference below has to be addressed
             if (board.CarbonDioxideList != null) return board.CarbonDioxideList;
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
     }
     
@@ -48,15 +47,25 @@ public class DbCarbonDioxideService: ICarbonDioxideService
     
     public async Task DeleteCarbonDioxideAsync(string boardId)
     {
-        var board = await _context.Boards.Include(b =>b.CarbonDioxideList ).FirstAsync(board => board.Id == boardId);
-        var carbonSet = board.CarbonDioxideList;
-
-        if (board.CarbonDioxideList != null)
+        try
         {
-            if (carbonSet != null) _context.CarbonDioxideSet.RemoveRange(carbonSet);
+            var board = await _context.Boards.Include(b =>b.CarbonDioxideList ).FirstAsync(board => board.Id == boardId);
+            var carbonSet = board.CarbonDioxideList;
+
+            if (board.CarbonDioxideList != null)
+            {
+                if (carbonSet != null) _context.CarbonDioxideSet.RemoveRange(carbonSet);
+            }
+        
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board id not found");
         }
         
-        await _context.SaveChangesAsync();
+       
     }
     
    

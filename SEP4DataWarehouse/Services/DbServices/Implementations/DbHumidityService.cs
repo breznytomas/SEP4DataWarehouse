@@ -20,14 +20,13 @@ public class DbHumidityService : IHumidityService
         try
         {
             var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));
-            //todo by tomas null pointer possible reference below has to be addressed better 
             if (board.HumidityList != null) return board.HumidityList;
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
     }
     
@@ -47,14 +46,23 @@ public class DbHumidityService : IHumidityService
     
     public async Task DeleteHumidity(string boardId)
     {
-        var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));
-        var humidityList = board.HumidityList;
-
-        if (board.HumidityList != null)
+        try
         {
-            if (humidityList != null) _context.HumiditySet.RemoveRange(humidityList);
-        }
+            var board = await _context.Boards.Include(b =>b.HumidityList ).FirstAsync(board => board.Id.Equals(boardId));
+            var humidityList = board.HumidityList;
+
+            if (board.HumidityList != null)
+            {
+                if (humidityList != null) _context.HumiditySet.RemoveRange(humidityList);
+            }
       
-        await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board id not found");
+        }
+       
     }
 }

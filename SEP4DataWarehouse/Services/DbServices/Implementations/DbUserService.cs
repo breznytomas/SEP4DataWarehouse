@@ -1,3 +1,4 @@
+using System.Data;
 using Microsoft.EntityFrameworkCore;
 using SEP4DataWarehouse.Contexts.DbContext;
 using SEP4DataWarehouse.Models.DbModels;
@@ -16,15 +17,19 @@ public class DbUserService : IUserService
 
     public async Task<User> LoginUser(string email, string password)
     {
-        var user = _context.Users.Include(u=>u.BoardList).FirstOrDefault(u => u.Email == email && u.Password == password);
-        if (user != null)
+        try
         {
+            var user = _context.Users.Include(u=>u.BoardList).FirstOrDefault(u => u.Email == email && u.Password == password);
             return user;
+            
         }
-        else
+        catch (Exception e)
         {
-            throw new Exception("wrong email or password");
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("user not found");
         }
+       
+     
     }
 
     public async Task AddUser<User>(User user)
@@ -35,18 +40,36 @@ public class DbUserService : IUserService
 
     public async Task RemoveUser(string userEmail, string password)
     {
-        var user = _context.Users.First(u => u.Email.Equals(userEmail) && u.Password.Equals(password));
-         _context.Users.Remove(user);
-         await _context.SaveChangesAsync();
+        try
+        {
+            var user = _context.Users.First(u => u.Email.Equals(userEmail) && u.Password.Equals(password));
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("user id not found");
+        }
+       
     }
 
    
 
     public async Task ChangePassword(string email, string oldPassword, string newPassword)
     {
-        var user = _context.Users.First(u => u.Email.Equals(email) && u.Password.Equals(oldPassword));
-        user.Password = newPassword;
-        await _context.SaveChangesAsync();
+        try
+        {
+            var user = _context.Users.First(u => u.Email.Equals(email) && u.Password.Equals(oldPassword));
+            user.Password = newPassword;
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ConstraintException("Old and new password does not match or user not found");
+        }
+       
 
     }
 }

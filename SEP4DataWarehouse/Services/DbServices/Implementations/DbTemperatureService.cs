@@ -18,14 +18,13 @@ public class DbTemperatureService : ITemperatureService
         try
         {
             var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id.Equals(boardId));
-            //todo by tomas null pointer possible reference below has to be addressed
             if (board.TemperatureList != null) return board.TemperatureList;
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
     }
     
@@ -45,15 +44,24 @@ public class DbTemperatureService : ITemperatureService
     
     public async Task DeleteTemperatureAsync(string boardId)
     {
-        var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id.Equals(boardId));
-        var temperatureList = board.TemperatureList;
-
-        if (board.TemperatureList != null)
+        try
         {
-            if (temperatureList != null) _context.TemperatureSet.RemoveRange(temperatureList);
-        }
+            var board = await _context.Boards.Include(b =>b.TemperatureList ).FirstAsync(board => board.Id.Equals(boardId));
+            var temperatureList = board.TemperatureList;
 
-        await _context.SaveChangesAsync();
+            if (board.TemperatureList != null)
+            {
+                if (temperatureList != null) _context.TemperatureSet.RemoveRange(temperatureList);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board Id not found");
+        }
+        
     }
 
   

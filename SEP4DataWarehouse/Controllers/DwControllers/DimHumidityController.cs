@@ -16,7 +16,7 @@ public class DimHumidityController : ControllerBase {
         this._exceptionUtility = exceptionUtility;
     }
 
-    [HttpGet("/api/Humidity/Dim")]
+    [HttpGet("/api/Humidity/Average")]
     public async Task<ActionResult<float>> GetHumidityAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var humAverageValue = await _dimHumidityService.GetHumidityAverage(boardId, timeFrom, timeTo);

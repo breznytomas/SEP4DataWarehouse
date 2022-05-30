@@ -19,14 +19,14 @@ public class DbLightService : ILightService
         try
         {
             var board = await _context.Boards.Include(b =>b.LightLists ).FirstAsync(board => board.Id.Equals(boardId));
-            //todo by tomas null pointer possible reference below has to be addressed better
+           
             if (board.LightLists != null) return board.LightLists;
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw new Exception();
+            throw new KeyNotFoundException("Board Id not found, or bord does not have any measurements");
         }
     }
 
@@ -45,14 +45,23 @@ public class DbLightService : ILightService
     
     public async Task DeleteLightAsync(string boardId)
     {
-        var board = await _context.Boards.Include(b =>b.LightLists ).FirstAsync(board => board.Id.Equals(boardId));
-        var lightList = board.LightLists;
-
-        if (board.LightLists != null)
+        try
         {
-            if (lightList != null) _context.LightSet.RemoveRange(lightList);
+            var board = await _context.Boards.Include(b =>b.LightLists ).FirstAsync(board => board.Id.Equals(boardId));
+            var lightList = board.LightLists;
+
+            if (board.LightLists != null)
+            {
+                if (lightList != null) _context.LightSet.RemoveRange(lightList);
+            }
+            await _context.SaveChangesAsync();
         }
-        await _context.SaveChangesAsync();
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board id not found");
+        }
+       
     }
 
     

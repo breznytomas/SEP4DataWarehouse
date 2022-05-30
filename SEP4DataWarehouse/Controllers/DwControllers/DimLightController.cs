@@ -15,7 +15,7 @@ public class DimLightController : ControllerBase {
         _exceptionUtility = exceptionUtility;
     }
 
-    [HttpGet("/api/Light/Dim")]
+    [HttpGet("/api/Light/Average")]
     public async Task<ActionResult<float>> GetLightAverage(string boardId, DateTime timeFrom, DateTime timeTo) {
         try {
             var lightAverage = await _DimLightService.GetLightAverage(boardId, timeFrom, timeTo);

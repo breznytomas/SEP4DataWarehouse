@@ -17,19 +17,38 @@ public class DbBoardService : IBoardService
 
     public async Task AttachUserToBoard(string boardId, string userEmail)
     {
-        var board =  _context.Boards.Include(b=> b.UserList).First(b => b.Id.Equals(boardId));
-        var user = _context.Users.First(u => u.Email.Equals(userEmail));
+        try
+        {
+            var board =  _context.Boards.Include(b=> b.UserList).First(b => b.Id.Equals(boardId));
+            var user = _context.Users.First(u => u.Email.Equals(userEmail));
         
-        board.UserList?.Add(user);
+            board.UserList?.Add(user);
         
-        await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("board or user not found");
+        }
+        
+       
        
     }
 
     public async Task<ICollection<Board>> GetBoardsByUser(string userEmail)
     {
-        var user = _context.Users.Include(u => u.BoardList).FirstOrDefault(u => u.Email.Equals(userEmail));
-        return user.BoardList;
+        try
+        {
+            var user = _context.Users.Include(u => u.BoardList).FirstOrDefault(u => u.Email.Equals(userEmail));
+            return user.BoardList;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("User does not have any board");
+        }
+       
     }
 
     public async Task<Board> AddBoardAsync(Board board)
@@ -42,32 +61,43 @@ public class DbBoardService : IBoardService
 
     public async Task DeleteBoard(string boardId)
     {
-        var boardToDelete = _context.Boards.Include(b => b.HumidityList).Include(e=>e.EventList)
-            .Include(t=>t.TemperatureList).Include(c=>c.CarbonDioxideList).Include(l=>l.LightLists).Include(u=>u.UserList)
-            .First(board => board.Id.Equals(boardId));
-
-        if (boardToDelete.EventList != null)
+        try
         {
-            foreach (var theEvent in boardToDelete.EventList)
+            var boardToDelete = _context.Boards.Include(b => b.HumidityList).Include(e=>e.EventList)
+                .Include(t=>t.TemperatureList).Include(c=>c.CarbonDioxideList).Include(l=>l.LightLists).Include(u=>u.UserList)
+                .First(board => board.Id.Equals(boardId));
+
+            if (boardToDelete.EventList != null)
             {
-                if (theEvent.TriggerList!=null)
+                foreach (var theEvent in boardToDelete.EventList)
                 {
-                    _context.Triggers.RemoveRange(theEvent.TriggerList);
-                }
+                    if (theEvent.TriggerList!=null)
+                    {
+                        _context.Triggers.RemoveRange(theEvent.TriggerList);
+                    }
                
+                }
+
+                _context.Events.RemoveRange(boardToDelete.EventList);
+            
             }
 
-            _context.Events.RemoveRange(boardToDelete.EventList);
+            if (boardToDelete.HumidityList != null) _context.HumiditySet.RemoveRange(boardToDelete.HumidityList);
+            if (boardToDelete.TemperatureList != null) _context.TemperatureSet.RemoveRange(boardToDelete.TemperatureList);
+            if (boardToDelete.CarbonDioxideList != null)
+                _context.CarbonDioxideSet.RemoveRange(boardToDelete.CarbonDioxideList);
+            if (boardToDelete.LightLists != null) _context.LightSet.RemoveRange(boardToDelete.LightLists);
+
+            _context.Boards.Remove(boardToDelete);
+            await _context.SaveChangesAsync();
         }
-
-        if (boardToDelete.HumidityList != null) _context.HumiditySet.RemoveRange(boardToDelete.HumidityList);
-        if (boardToDelete.TemperatureList != null) _context.TemperatureSet.RemoveRange(boardToDelete.TemperatureList);
-        if (boardToDelete.CarbonDioxideList != null)
-            _context.CarbonDioxideSet.RemoveRange(boardToDelete.CarbonDioxideList);
-        if (boardToDelete.LightLists != null) _context.LightSet.RemoveRange(boardToDelete.LightLists);
-
-        _context.Boards.Remove(boardToDelete);
-        await _context.SaveChangesAsync();
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board with the provided id was not found");
+        }
+        
+       
     }
     
     

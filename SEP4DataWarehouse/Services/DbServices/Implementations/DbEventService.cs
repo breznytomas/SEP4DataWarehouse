@@ -1,3 +1,4 @@
+using System.Data;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SEP4DataWarehouse.Contexts.DbContext;
@@ -38,7 +39,7 @@ public class DbEventService : IEventService
             {
                 if (theEvent.EventTypes==eventDto.EventTypes)
                 {
-                    throw new Exception("This event type already exists for this board");
+                    throw new ConstraintException("This event type already exists for this board");
                 }
             }
 
@@ -57,36 +58,57 @@ public class DbEventService : IEventService
         catch (Exception e)
         {
 
-            throw new Exception(e.Message);
+            throw new KeyNotFoundException("Board is not found");
         }
        
     }
 
     public async Task UpdateEvent(string boardId, Event eventReceived)
     {
-       // TODO by tomas finish this
-       var board = _context.Boards.Include(b => b.EventList).First(board => board.Id.Equals(boardId));
-       var eventFromDb = board.EventList.First(e => e.Id == eventReceived.Id);
 
-       eventFromDb.Bottom = eventReceived.Bottom;
-       eventFromDb.Top = eventReceived.Top;
-       eventFromDb.Name = eventReceived.Name;
+        try
+        {
+            var board = _context.Boards.Include(b => b.EventList).First(board => board.Id.Equals(boardId));
+            var eventFromDb = board.EventList.First(e => e.Id == eventReceived.Id);
 
-       await _context.SaveChangesAsync();
+            eventFromDb.Bottom = eventReceived.Bottom;
+            eventFromDb.Top = eventReceived.Top;
+            eventFromDb.Name = eventReceived.Name;
+
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board id or event id was not found");
+        }
+        
 
 
     }
 
     public async Task DeleteEventFromBoard( string boardId, long eventId)
     {
-        var board = await _context.Boards.Include(b => b.EventList).ThenInclude(e=>e.TriggerList).FirstAsync(b => b.Id.Equals(boardId));
-        
-        var event1 = board.EventList.First(e => e.Id == eventId);
-        
-        if (board.EventList != null )    _context.Events.Remove(event1);
-        if (event1.TriggerList!= null)   _context.Triggers.RemoveRange(event1.TriggerList);
-        
-        await _context.SaveChangesAsync();
+        try
+        {
+            var board = await _context.Boards.Include(b => b.EventList).ThenInclude(e => e.TriggerList)
+                .FirstAsync(b => b.Id.Equals(boardId));
+
+            var event1 = board.EventList.First(e => e.Id == eventId);
+
+            if (board.EventList != null) _context.Events.Remove(event1);
+            if (event1.TriggerList != null) _context.Triggers.RemoveRange(event1.TriggerList);
+
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("Board id or event id was not found");
+        }
+       
+       
+       
     }
     
     

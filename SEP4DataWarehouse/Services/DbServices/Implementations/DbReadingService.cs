@@ -18,17 +18,25 @@ public class DbReadingService: IReadingService
 
     public async Task AddReading(ReadingDto readingDto)
     {
-
-        var reading = new Reading()
+        try
         {
-            BoardId = readingDto.BoardId,
-            LightLists = readingDto.LightLists,
-            HumidityList = readingDto.HumidityList,
-            TemperatureList = readingDto.TemperatureList,
-            CarbonDioxideList = readingDto.CarbonDioxideList
-        };
+            var reading = new Reading()
+            {
+                BoardId = readingDto.BoardId,
+                LightLists = readingDto.LightLists,
+                HumidityList = readingDto.HumidityList,
+                TemperatureList = readingDto.TemperatureList,
+                CarbonDioxideList = readingDto.CarbonDioxideList
+            };
         
-        await _context.Readings.AddAsync(reading);
-       await _context.SaveChangesAsync();
+            await _context.Readings.AddAsync(reading);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new Exception(e.Message);
+        }
+        
     }
 }
