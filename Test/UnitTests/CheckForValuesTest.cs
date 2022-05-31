@@ -252,7 +252,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(100, deviationDegree);
+        Assert.Equal(200, deviationDegree);
     }
 
     [Fact]
@@ -308,7 +308,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(100, deviationDegree);
+        Assert.Equal(200, deviationDegree);
     }
     
     [Fact]
@@ -364,7 +364,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(50, deviationDegree);
+        Assert.Equal(150, deviationDegree);
     }
 
     [Fact]
@@ -421,7 +421,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(0, deviationDegree);
+        Assert.Equal(100, deviationDegree);
     }
 
     [Fact]
@@ -478,7 +478,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(-50, deviationDegree);
+        Assert.Equal(50, deviationDegree);
     }
 
     [Fact]
@@ -535,7 +535,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(-90, deviationDegree);
+        Assert.Equal(10, deviationDegree);
     }
 
     [Fact]
@@ -598,7 +598,7 @@ public class CheckForValuesTest
         var deviationDegree = CheckForValues.GetDeviationDegree(maxTempValue, tempLimitValue);
 
         testOutputHelper.WriteLine(deviationDegree.ToString());
-        Assert.Equal(-100, deviationDegree);
+        Assert.Equal(0, deviationDegree);
     }
 
     private ReadingDto LoadReadingFromJson(string filename)

@@ -93,8 +93,7 @@ public class CheckForValues
              
         }
         
-        // subtract 100 from the number
-        // get a number within the desired range (-100 to 100)
+        // get a number within the desired range (0 to 200)
         return deviationPoints;
     }
 
