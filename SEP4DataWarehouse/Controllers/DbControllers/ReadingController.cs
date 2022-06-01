@@ -14,12 +14,12 @@ public class ReadingController : ControllerBase
     private readonly ILightService _lightService;
     private readonly IHumidityService _humidityService;
     private readonly ITemperatureService _temperatureService;
-    private readonly CheckForValues _checkForValues;
+    private readonly ICheckForValuesService _checkForValues;
     private readonly IReadingService _readingService;
 
     private readonly IExceptionUtilityService exceptionUtility;
 
-    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService, IHumidityService humidityService, ITemperatureService temperatureService, CheckForValues checkForValues, IReadingService readingService ,IExceptionUtilityService exceptionUtility)
+    public ReadingController(ICarbonDioxideService carbonDioxideService, ILightService lightService, IHumidityService humidityService, ITemperatureService temperatureService, ICheckForValuesService checkForValues, IReadingService readingService ,IExceptionUtilityService exceptionUtility)
     {
         _carbonDioxideService = carbonDioxideService;
         _lightService = lightService;
