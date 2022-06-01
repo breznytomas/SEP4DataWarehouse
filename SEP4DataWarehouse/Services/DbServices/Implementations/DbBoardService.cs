@@ -99,8 +99,24 @@ public class DbBoardService : IBoardService
         
        
     }
-    
-    
-    
-    
+
+    public async Task DissasociateBoard(string boardId, string userEmail)
+    {
+        try
+        {
+            var boardToDissasociate = _context.Boards.Include(u=>u.UserList).First(b => b.Id.Equals(boardId));
+            var userToDissasociate = _context.Users.Include(b=>b.BoardList).First(u => u.Email.Equals(userEmail));
+            boardToDissasociate.UserList.Remove(userToDissasociate);
+            userToDissasociate.BoardList.Remove(boardToDissasociate);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new KeyNotFoundException("the board or the user was not found");
+        }
+        
+
+
+    }
 }

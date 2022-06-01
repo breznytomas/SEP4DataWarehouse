@@ -10,6 +10,7 @@ public interface IBoardService
      Task<ICollection<Board>> GetBoardsByUser(string userEmail);
      Task<Board> AddBoardAsync(Board board);
      Task DeleteBoard(string boardId);
+     Task DissasociateBoard(string boardId, string userEmail);
 
 
 }

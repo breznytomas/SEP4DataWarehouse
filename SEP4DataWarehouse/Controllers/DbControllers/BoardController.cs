@@ -35,6 +35,23 @@ public class BoardController : ControllerBase
             return exceptionUtility.HandleException(e);
         }
     }
+    
+    [Route("Disassociate")]
+    [HttpDelete]
+    public async Task<ActionResult> DissasociateUserFromBoard(string boardId, string userEmail)
+    {
+        try
+        {
+            await _boardService.DissasociateBoard(boardId, userEmail);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return exceptionUtility.HandleException(e);
+        }
+    }
+    
+    
 
     [HttpGet]
     public async Task<ActionResult<IList<Board>>> GetBoardsByUser(string userEmail)
