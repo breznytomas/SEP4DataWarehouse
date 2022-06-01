@@ -559,7 +559,14 @@ public class CheckForValuesTest
                     Id = 0,
                     Timestamp = 1652995127,
                     Value = 1
+                },
+                new Temperature()
+                {
+                    Id = 0,
+                    Timestamp = 1652995127,
+                    Value = -55
                 }
+                
             }
         };
 

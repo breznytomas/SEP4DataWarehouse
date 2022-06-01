@@ -8,7 +8,7 @@ using SEP4DataWarehouse.Services;
 
 namespace SEP4DataWarehouse.BusinessLogic;
 
-public class CheckForValues
+public class CheckForValues : ICheckForValuesService
 {
     private readonly GreenHouseDbContext _context;
 

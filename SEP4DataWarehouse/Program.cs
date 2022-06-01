@@ -28,6 +28,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<ITemperatureService, DbTemperatureService>();
     builder.Services.AddScoped<IEventService, DbEventService>();
     builder.Services.AddScoped<IReadingService, DbReadingService>();
+    builder.Services.AddScoped<ICheckForValuesService, CheckForValues>();
+
 
 
     //Adding the service classes for DataWarehouse
